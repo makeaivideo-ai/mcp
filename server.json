@@ -3,20 +3,33 @@
   "name": "ai.makeaivideo/video-generator",
   "title": "MakeAIVideo",
   "description": "Create finished AI videos (script, voiceover, scenes, captions, music) for TikTok, Reels and Shorts.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "websiteUrl": "https://makeaivideo.ai/docs/mcp",
-  "repository": { "url": "https://github.com/makeaivideo-ai/mcp", "source": "github" },
+  "repository": {
+    "url": "https://github.com/makeaivideo-ai/mcp",
+    "source": "github"
+  },
   "remotes": [
-    { "type": "streamable-http", "url": "https://mcp.makeaivideo.ai" }
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.makeaivideo.ai"
+    }
   ],
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@makeaivideo/mcp",
       "version": "1.0.0",
-      "transport": { "type": "stdio" },
+      "transport": {
+        "type": "stdio"
+      },
       "environmentVariables": [
-        { "name": "MAKEAIVIDEO_API_KEY", "description": "Your MakeAIVideo API key (mav_...), from https://app.makeaivideo.ai/developers", "isRequired": true, "isSecret": true }
+        {
+          "name": "MAKEAIVIDEO_API_KEY",
+          "description": "Your MakeAIVideo API key (mav_...), from https://app.makeaivideo.ai/developers",
+          "isRequired": true,
+          "isSecret": true
+        }
       ]
     }
   ]
