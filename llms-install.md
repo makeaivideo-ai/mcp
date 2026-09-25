@@ -1,0 +1,26 @@
+# Installing the MakeAIVideo MCP server (instructions for AI agents)
+
+Goal: give the user's MCP client the MakeAIVideo tools (create AI videos, check status, download MP4s).
+
+1. Ask the user for a MakeAIVideo API key. They create one at https://app.makeaivideo.ai/developers (Settings, Advanced, API keys). It starts with `mav_`. Never invent a key.
+2. Add this server to the client's MCP settings (Cline: `cline_mcp_settings.json`):
+
+```json
+{
+  "mcpServers": {
+    "makeaivideo": {
+      "command": "npx",
+      "args": ["-y", "@makeaivideo/mcp"],
+      "env": { "MAKEAIVIDEO_API_KEY": "mav_REPLACE_WITH_USER_KEY" }
+    }
+  }
+}
+```
+
+3. Requirements: Node.js 18 or newer (`node --version`). No build step, no other environment variables.
+4. Verify: call the `whoami` tool. It returns the key's scopes and the credit balance. Then `get_credits`.
+5. Typical use: `estimate_video_cost`, then a `create_*_video` tool (for example `create_explainer_video` with a `topic`), then poll `get_video_status` respecting `poll_after_seconds` until status is `ready`, then `get_download_url`.
+
+Alternative for clients that support remote MCP with OAuth: connect to `https://mcp.makeaivideo.ai` instead; no key or local process needed.
+
+Troubleshooting: "MAKEAIVIDEO_API_KEY is not set" means the env block is missing or empty. A 403 naming a scope means the key was created without `write` or `ai`; create a new key with all scopes.
