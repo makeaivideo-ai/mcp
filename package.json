@@ -1,8 +1,8 @@
 {
   "name": "@makeaivideo/mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "mcpName": "ai.makeaivideo/video-generator",
-  "description": "MakeAIVideo MCP server: let Claude, ChatGPT, Cursor and any MCP client create finished AI videos (script, voiceover, scenes, captions, music) for TikTok, Instagram Reels and YouTube Shorts. 39 tools.",
+  "description": "MakeAIVideo MCP server: let Claude, ChatGPT, Cursor and any MCP client create finished AI videos (script, voiceover, scenes, captions, music) and post them to TikTok, Instagram, YouTube and other connected social accounts. 44 tools.",
   "type": "module",
   "bin": {
     "makeaivideo-mcp": "dist/index.js"
@@ -14,7 +14,8 @@
     "README.md",
     "dist",
     "llms-install.md",
-    "server.json"
+    "server.json",
+    "tools.json"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && chmod +x dist/index.js",
@@ -42,7 +43,10 @@
     "tiktok",
     "instagram reels",
     "youtube shorts",
-    "faceless video"
+    "faceless video",
+    "social media",
+    "social media posting",
+    "video publishing"
   ],
   "author": "MakeAIVideo <support@makeaivideo.ai> (https://makeaivideo.ai)",
   "license": "MIT",

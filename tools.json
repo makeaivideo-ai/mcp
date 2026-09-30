@@ -1,0 +1,1257 @@
+{
+  "tools": [
+    {
+      "name": "create_explainer_video",
+      "description": "Explainer video: Take one idea and make it land. We open on the question, explain the mechanism, and pay it off. Costs credits (use estimate_video_cost first). Returns a video id immediately; the render takes minutes - poll get_video_status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "What do you want to explain?. One idea explains better than five. Narrow beats broad.",
+            "maxLength": 1200
+          },
+          "duration_seconds": {
+            "type": "number",
+            "description": "Target length in seconds. Options: 30, 45, 60, 90."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "9:16",
+              "1:1",
+              "16:9"
+            ],
+            "description": "Output aspect. Default 9:16."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of creating (and charging for) a second one. Set it when retrying."
+          }
+        },
+        "required": [
+          "topic"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Explainer video"
+      }
+    },
+    {
+      "name": "create_listicle_video",
+      "description": "List video: Numbered tips, ranked picks, or things people get wrong. Each item gets its own scene. Costs credits (use estimate_video_cost first). Returns a video id immediately; the render takes minutes - poll get_video_status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "What is the list about?",
+            "maxLength": 1200
+          },
+          "count": {
+            "type": "string",
+            "description": "How many items?. We will write fewer if the topic only supports fewer real items.",
+            "maxLength": 2
+          },
+          "duration_seconds": {
+            "type": "number",
+            "description": "Target length in seconds. Options: 30, 45, 60, 90."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "9:16",
+              "1:1",
+              "16:9"
+            ],
+            "description": "Output aspect. Default 9:16."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of creating (and charging for) a second one. Set it when retrying."
+          }
+        },
+        "required": [
+          "topic"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "List video"
+      }
+    },
+    {
+      "name": "create_story_video",
+      "description": "Story video: Open inside the moment, escalate, reveal. Built for history, mysteries and true events. Costs credits (use estimate_video_cost first). Returns a video id immediately; the render takes minutes - poll get_video_status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "What is the story?",
+            "maxLength": 2000
+          },
+          "duration_seconds": {
+            "type": "number",
+            "description": "Target length in seconds. Options: 30, 45, 60, 90."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "9:16",
+              "1:1",
+              "16:9"
+            ],
+            "description": "Output aspect. Default 9:16."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of creating (and charging for) a second one. Set it when retrying."
+          }
+        },
+        "required": [
+          "topic"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Story video"
+      }
+    },
+    {
+      "name": "create_ugc_video",
+      "description": "UGC-style ad: Reads like a real recommendation, not an advert. Cold open, honest caveat, soft close. Costs credits (use estimate_video_cost first). Returns a video id immediately; the render takes minutes - poll get_video_status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "string",
+            "description": "What are you promoting?",
+            "maxLength": 1200
+          },
+          "cta": {
+            "type": "string",
+            "description": "How should they close?",
+            "maxLength": 80
+          },
+          "duration_seconds": {
+            "type": "number",
+            "description": "Target length in seconds. Options: 20, 30, 45."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "9:16",
+              "1:1",
+              "16:9"
+            ],
+            "description": "Output aspect. Default 9:16."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of creating (and charging for) a second one. Set it when retrying."
+          }
+        },
+        "required": [
+          "product"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "UGC-style ad"
+      }
+    },
+    {
+      "name": "create_demo_video",
+      "description": "Product demo: Show the job getting done, step by step, and end on the result. Costs credits (use estimate_video_cost first). Returns a video id immediately; the render takes minutes - poll get_video_status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "string",
+            "description": "What are you demonstrating?",
+            "maxLength": 1200
+          },
+          "cta": {
+            "type": "string",
+            "description": "Call to action",
+            "maxLength": 80
+          },
+          "duration_seconds": {
+            "type": "number",
+            "description": "Target length in seconds. Options: 30, 45, 60."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "9:16",
+              "1:1",
+              "16:9"
+            ],
+            "description": "Output aspect. Default 16:9."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of creating (and charging for) a second one. Set it when retrying."
+          }
+        },
+        "required": [
+          "product"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Product demo"
+      }
+    },
+    {
+      "name": "create_article_video",
+      "description": "Article to video: Paste a blog post, newsletter or any writing. We select the spine and turn it into a short. Costs credits (use estimate_video_cost first). Returns a video id immediately; the render takes minutes - poll get_video_status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Paste the article. We use only what is in your text. Nothing is invented or added.",
+            "maxLength": 6000
+          },
+          "duration_seconds": {
+            "type": "number",
+            "description": "Target length in seconds. Options: 30, 45, 60, 90."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "9:16",
+              "1:1",
+              "16:9"
+            ],
+            "description": "Output aspect. Default 9:16."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of creating (and charging for) a second one. Set it when retrying."
+          }
+        },
+        "required": [
+          "source"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Article to video"
+      }
+    },
+    {
+      "name": "create_spokesperson_video",
+      "description": "Spokesperson video: One presenter, straight to camera, for announcements and messages from you. Costs credits (use estimate_video_cost first). Returns a video id immediately; the render takes minutes - poll get_video_status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "What is the message?",
+            "maxLength": 1500
+          },
+          "cta": {
+            "type": "string",
+            "description": "Closing line (optional)",
+            "maxLength": 80
+          },
+          "duration_seconds": {
+            "type": "number",
+            "description": "Target length in seconds. Options: 20, 30, 45, 60."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "9:16",
+              "1:1",
+              "16:9"
+            ],
+            "description": "Output aspect. Default 9:16."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of creating (and charging for) a second one. Set it when retrying."
+          }
+        },
+        "required": [
+          "topic"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Spokesperson video"
+      }
+    },
+    {
+      "name": "estimate_video_cost",
+      "description": "Free. Quote the credit cost of a video before creating it. Same tools and arguments as the create_* tools.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": {
+            "type": "string",
+            "enum": [
+              "explainer",
+              "listicle",
+              "story",
+              "ugc",
+              "demo",
+              "article",
+              "spokesperson"
+            ],
+            "description": "Which create tool the video would use."
+          },
+          "duration_seconds": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "tool"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Estimate cost"
+      }
+    },
+    {
+      "name": "get_video_status",
+      "description": "Check one video's progress. Returns status, a progress note, and download_url when ready. Respect poll_after_seconds between calls.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Public id, e.g. vid_abc123"
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Video status"
+      }
+    },
+    {
+      "name": "list_my_videos",
+      "description": "List this account's videos (id, title, status). Use it to recover a video id rather than guessing one.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "List videos"
+      }
+    },
+    {
+      "name": "whoami",
+      "description": "Free. Who this key belongs to: user, organization, plan, scopes and the live credit balance. Call first to confirm the connection works.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Who am I"
+      }
+    },
+    {
+      "name": "get_credits",
+      "description": "Free. The organization's credit balance: allowance, bonus, used (including in-flight reservations) and remaining.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Credits"
+      }
+    },
+    {
+      "name": "get_download_url",
+      "description": "A signed URL for a finished video's MP4, valid 15 minutes. Only works once get_video_status reports ready.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Public id, e.g. vid_abc123"
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Download URL"
+      }
+    },
+    {
+      "name": "cancel_video",
+      "description": "Stop a render that is still generating and release its reserved credits. Cannot undo a finished video.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "title": "Cancel video"
+      }
+    },
+    {
+      "name": "list_voices",
+      "description": "Free. Curated voices plus a filtered slice of the full catalog. Filters: gender, accent, age, use_case. Returns ids usable in future voice options.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "gender": {
+            "type": "string"
+          },
+          "accent": {
+            "type": "string"
+          },
+          "age": {
+            "type": "string"
+          },
+          "use_case": {
+            "type": "string"
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Voices"
+      }
+    },
+    {
+      "name": "list_characters",
+      "description": "Free. Preset and workspace characters (id, name, style, image url).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Characters"
+      }
+    },
+    {
+      "name": "list_templates",
+      "description": "Free. The template library (id, title, which create tool it maps to).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Templates"
+      }
+    },
+    {
+      "name": "write_script",
+      "description": "Write the script only (no video, no render credits): title, hook and scenes with narration and visual directions. Give a topic, or a tool + fields from the create tools. Edit it, then create_video_from_script.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "Free-text topic. Use this OR tool+fields."
+          },
+          "tool": {
+            "type": "string",
+            "enum": [
+              "explainer",
+              "listicle",
+              "story",
+              "ugc",
+              "demo",
+              "article",
+              "spokesperson"
+            ]
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "The tool's brief fields by name."
+          },
+          "target_duration": {
+            "type": "number",
+            "description": "Seconds, 10-1800."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "talking-head",
+              "cinematic",
+              "hybrid",
+              "stock-narrated",
+              "smart-mix"
+            ]
+          },
+          "language": {
+            "type": "string",
+            "description": "Language code or 'auto'."
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Write script"
+      }
+    },
+    {
+      "name": "create_video_from_script",
+      "description": "Render a video from a script you already have (from write_script, structure_text, or your own). Costs credits. Returns a video id; poll get_video_status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "script": {
+            "type": "object",
+            "description": "The script object: title, hook, scenes[{scene_number, narration, visual_description, duration_seconds, scene_type?}], total_duration_seconds, hashtags?"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "talking-head",
+              "cinematic",
+              "hybrid",
+              "stock-narrated",
+              "smart-mix"
+            ]
+          },
+          "character_id": {
+            "type": "number",
+            "description": "Optional: from list_characters."
+          },
+          "voice_id": {
+            "type": "string",
+            "description": "Optional: from list_voices."
+          },
+          "music_id": {
+            "type": "string",
+            "description": "Optional: from list_music."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "9:16",
+              "1:1",
+              "16:9"
+            ]
+          },
+          "language": {
+            "type": "string"
+          },
+          "start_generation": {
+            "type": "boolean",
+            "description": "Default true. false saves a draft; call generate_video later."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Same key = same video. Set it when retrying."
+          }
+        },
+        "required": [
+          "script"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Create from script"
+      }
+    },
+    {
+      "name": "structure_text",
+      "description": "Turn prose or a hand-written script into our structured scene script (free apart from a small AI cost). Then create_video_from_script.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 20
+          },
+          "mode": {
+            "type": "string"
+          },
+          "target_duration": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Structure text"
+      }
+    },
+    {
+      "name": "fetch_article",
+      "description": "Fetch a public article's readable text so you can brief the article tool from a URL.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Fetch article"
+      }
+    },
+    {
+      "name": "update_video",
+      "description": "Edit a video's title, topic, script or caption settings. Script edits apply on the next generate_video.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "script": {
+            "type": "object"
+          },
+          "caption_style": {
+            "type": "string"
+          },
+          "caption_alignment": {
+            "type": "string",
+            "enum": [
+              "top",
+              "middle",
+              "bottom"
+            ]
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Update video"
+      }
+    },
+    {
+      "name": "generate_video",
+      "description": "Start or re-run generation for a draft, or after update_video edits. Costs credits.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Generate video"
+      }
+    },
+    {
+      "name": "regenerate_scene",
+      "description": "Redo one scene's visuals, optionally with new narration. Costs credits.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string"
+          },
+          "scene_number": {
+            "type": "number"
+          },
+          "narration": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "video_id",
+          "scene_number"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Regenerate scene"
+      }
+    },
+    {
+      "name": "regenerate_voice",
+      "description": "Re-record the voiceover with another voice (from list_voices). Costs credits.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string"
+          },
+          "voice_id": {
+            "type": "string"
+          },
+          "voice_stability": {
+            "type": "string",
+            "enum": [
+              "stable",
+              "balanced",
+              "expressive"
+            ]
+          }
+        },
+        "required": [
+          "video_id",
+          "voice_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Regenerate voice"
+      }
+    },
+    {
+      "name": "export_video",
+      "description": "Export (render) the video again after edits. Returns a render id; poll get_video_status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Export video"
+      }
+    },
+    {
+      "name": "get_captions",
+      "description": "The finished video's captions as SRT or VTT text.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "srt",
+              "vtt"
+            ]
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Captions"
+      }
+    },
+    {
+      "name": "create_share_link",
+      "description": "A public, expiring link to the finished MP4 for people without an account (default 24h, max 7 days).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string"
+          },
+          "expires_in_seconds": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Share link"
+      }
+    },
+    {
+      "name": "delete_video",
+      "description": "Delete a video and its files. Irreversible. Confirm with the user first.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "title": "Delete video"
+      }
+    },
+    {
+      "name": "generate_ideas",
+      "description": "Scored video ideas for a niche and audience.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "niche": {
+            "type": "string"
+          },
+          "audience": {
+            "type": "string"
+          },
+          "tone": {
+            "type": "string",
+            "enum": [
+              "educational",
+              "entertaining",
+              "inspirational",
+              "humorous",
+              "controversial"
+            ]
+          },
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "niche"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Ideas"
+      }
+    },
+    {
+      "name": "enhance_prompt",
+      "description": "Rewrite a rough topic into a stronger brief before creating.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "topic"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Enhance prompt"
+      }
+    },
+    {
+      "name": "generate_character_portraits",
+      "description": "Generate 1-4 portrait candidates for a new character from a description. Costs credits. Returns r2_key values to pass to create_character.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string"
+          },
+          "style": {
+            "type": "string"
+          },
+          "count": {
+            "type": "number"
+          },
+          "reference_image_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "prompt",
+          "style"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Character portraits"
+      }
+    },
+    {
+      "name": "generate_voice_previews",
+      "description": "Candidate voices for a new character reading a sample line. Returns voice ids and preview temp keys for create_character.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sample_text": {
+            "type": "string"
+          },
+          "gender_hint": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ]
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Voice previews"
+      }
+    },
+    {
+      "name": "create_character",
+      "description": "Save a character from a chosen portrait (r2_key) and voice preview (temp key + voice id).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "style": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "portrait_temp_key": {
+            "type": "string"
+          },
+          "voice_preview_temp_key": {
+            "type": "string"
+          },
+          "voice_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "style",
+          "portrait_temp_key",
+          "voice_preview_temp_key",
+          "voice_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Create character"
+      }
+    },
+    {
+      "name": "generate_music",
+      "description": "Generate a background track (15, 30 or 60 seconds) from a prompt and mood. Use the returned id as music_id when creating a video.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number",
+            "enum": [
+              15,
+              30,
+              60
+            ]
+          },
+          "mood": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "prompt"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Generate music"
+      }
+    },
+    {
+      "name": "list_music",
+      "description": "Free. Your generated background tracks.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Music"
+      }
+    },
+    {
+      "name": "preview_voice",
+      "description": "Hear a voice say your text (up to 500 characters). Returns a 1-hour audio URL.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "voice_id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "voice_id",
+          "text"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Preview voice"
+      }
+    },
+    {
+      "name": "create_webhook",
+      "description": "Receive video.created / video.ready / video.failed / character.created / post.published / post.partially_failed / post.failed at a public https URL instead of polling. The signing secret is returned once.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "video.created",
+                "video.ready",
+                "video.failed",
+                "character.created",
+                "post.published",
+                "post.partially_failed",
+                "post.failed"
+              ]
+            }
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "events"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Create webhook"
+      }
+    },
+    {
+      "name": "list_webhooks",
+      "description": "Free. Your webhooks and their delivery health.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Webhooks"
+      }
+    },
+    {
+      "name": "list_social_accounts",
+      "description": "Free. The social accounts this workspace has connected (id acc_..., platform, name, can_post, needs_reconnection), the plan's account limit (limit, used), and every platform with how it connects. Platforms: TikTok, Instagram (posts as a Reel), YouTube (posts as a Short), Facebook (Pages only), LinkedIn, Threads, Pinterest, Bluesky, Telegram and Discord. X is not available. Call this before publish_video to get account ids; never guess them. An account with can_post false or needs_reconnection true must be reconnected by the user in the web app before posting.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Social accounts"
+      }
+    },
+    {
+      "name": "get_connect_link",
+      "description": "Get a short-lived link that connects one social account. A PERSON must open the link in a browser and approve access; you cannot complete it yourself, so give the link to the user and ask them to open it. Then call list_social_accounts to see the new account. Works for tiktok, instagram (posts as a Reel; uses Instagram login, not Facebook), youtube (posts as a Short), facebook (Pages only), linkedin, threads and pinterest. Bluesky, Telegram and Discord connect with credentials in the web app only (Accounts page): tell the user to connect them there. X is not available. Refused when the plan's account limit is reached.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "platform": {
+            "type": "string",
+            "enum": [
+              "tiktok",
+              "instagram",
+              "youtube",
+              "facebook",
+              "linkedin",
+              "threads",
+              "pinterest"
+            ],
+            "description": "The platform to connect."
+          }
+        },
+        "required": [
+          "platform"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Connect link"
+      }
+    },
+    {
+      "name": "publish_video",
+      "description": "Post a finished video (status ready) to one or more connected social accounts, now or at a scheduled time. This posts publicly on the user's real accounts: confirm the accounts and caption with the user first. Asynchronous: returns a post id (pub_...) at once; then poll get_publish_status until done is true (respect poll_after_seconds). Platforms: TikTok, Instagram (posts as a Reel), YouTube (posts as a Short), Facebook (Pages only), LinkedIn, Threads, Pinterest, Bluesky, Telegram and Discord. X is not available. Set idempotency_key when retrying so the video is not posted twice.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123. Must be ready."
+          },
+          "account_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Account ids (acc_...) from list_social_accounts."
+          },
+          "caption": {
+            "type": "string",
+            "description": "Caption for every platform (hashtags included). Max 10000 characters."
+          },
+          "caption_overrides": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Optional. A different caption per platform, keyed by platform id (e.g. {\"linkedin\": \"...\"}). Replaces caption on that platform only."
+          },
+          "youtube_title": {
+            "type": "string",
+            "description": "Optional. YouTube title (max 100). Default: the video's own title."
+          },
+          "scheduled_for": {
+            "type": "string",
+            "description": "Optional. ISO 8601 time to post at (for example 2026-10-01T15:00:00Z). Omit to post now. Posts go out within about 2 minutes of the time."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "Optional. IANA timezone for the schedule, e.g. Europe/London."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Same key within 24 hours returns the same post instead of posting again."
+          }
+        },
+        "required": [
+          "video_id",
+          "account_ids",
+          "caption"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "title": "Publish video"
+      }
+    },
+    {
+      "name": "get_publish_status",
+      "description": "Status of one publish (post id pub_... from publish_video). status: preparing, importing, pending, scheduled, publishing, then published, partial or failed (done = true). Each destination has platform, status (pending, published, failed), url (the live post, when published) and error. Respect poll_after_seconds.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "post_id": {
+            "type": "string",
+            "description": "Post id, e.g. pub_abc123"
+          }
+        },
+        "required": [
+          "post_id"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Publish status"
+      }
+    },
+    {
+      "name": "list_posts",
+      "description": "Free. Past and scheduled publishes, newest first, with per-destination results and live post URLs. Filter by video_id. Paginate with cursor (next_cursor from the previous call).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Optional. Only this video's posts."
+          },
+          "limit": {
+            "type": "number",
+            "description": "1-100, default 20."
+          },
+          "cursor": {
+            "type": "string",
+            "description": "next_cursor from the previous page."
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Posts"
+      }
+    }
+  ]
+}

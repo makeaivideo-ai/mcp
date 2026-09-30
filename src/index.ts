@@ -21,8 +21,9 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js"
+import { readFileSync } from "node:fs"
 
-const VERSION = "1.0.0"
+const VERSION = "1.0.1"
 const REMOTE_URL = process.env.MAKEAIVIDEO_MCP_URL || "https://mcp.makeaivideo.ai"
 const API_KEY = process.env.MAKEAIVIDEO_API_KEY || process.env.MAV_API_KEY || ""
 
@@ -36,6 +37,24 @@ if (process.argv.includes("--version")) {
   process.exit(0)
 }
 
+/**
+ * Snapshot of the hosted server's tools/list (tools.json, shipped in the
+ * package). Served ONLY when no API key is set, so clients and directory
+ * scanners can see the tool list before the user adds a key. With a key,
+ * tools/list always comes live from the hosted server.
+ */
+function snapshotTools(): { tools: unknown[] } {
+  try {
+    const raw = readFileSync(new URL("../tools.json", import.meta.url), "utf8")
+    return JSON.parse(raw) as { tools: unknown[] }
+  } catch {
+    return { tools: [] }
+  }
+}
+
+const NO_KEY_MESSAGE =
+  "MAKEAIVIDEO_API_KEY is not set. Create a key at https://app.makeaivideo.ai/developers and add it to this server's env."
+
 let remote: Client | null = null
 let connecting: Promise<Client> | null = null
 
@@ -44,9 +63,7 @@ async function getRemote(): Promise<Client> {
   if (connecting) return connecting
   connecting = (async () => {
     if (!API_KEY) {
-      throw new Error(
-        "MAKEAIVIDEO_API_KEY is not set. Create a key at https://app.makeaivideo.ai/developers and add it to this server's env."
-      )
+      throw new Error(NO_KEY_MESSAGE)
     }
     const transport = new StreamableHTTPClientTransport(new URL(REMOTE_URL), {
       requestInit: {
@@ -74,11 +91,12 @@ const server = new Server(
   {
     capabilities: { tools: {} },
     instructions:
-      "MakeAIVideo turns a brief into a finished short-form video (script, voiceover, scenes, captions). Estimate cost first, create, then poll get_video_status - renders take minutes, respect poll_after_seconds.",
+      "MakeAIVideo turns a brief into a finished short-form video (script, voiceover, scenes, captions) and can post it to the user's connected social accounts. Estimate cost first, create, then poll get_video_status - renders take minutes, respect poll_after_seconds. Confirm accounts and caption with the user before publish_video.",
   }
 )
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
+  if (!API_KEY) return snapshotTools() as never
   try {
     const client = await getRemote()
     return await client.listTools()

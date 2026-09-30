@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.makeaivideo/video-generator",
   "title": "MakeAIVideo",
-  "description": "Create finished AI videos (script, voiceover, scenes, captions, music) for TikTok, Reels and Shorts.",
-  "version": "1.3.0",
+  "description": "Create AI videos (voiceover, scenes, captions, music) and post them to TikTok, Reels and Shorts.",
+  "version": "1.4.0",
   "websiteUrl": "https://makeaivideo.ai/docs/mcp",
   "repository": {
     "url": "https://github.com/makeaivideo-ai/mcp",
@@ -19,7 +19,7 @@
     {
       "registryType": "npm",
       "identifier": "@makeaivideo/mcp",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "transport": {
         "type": "stdio"
       },
