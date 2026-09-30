@@ -3,7 +3,7 @@
   "name": "ai.makeaivideo/video-generator",
   "title": "MakeAIVideo",
   "description": "Create AI videos (voiceover, scenes, captions, music) and post them to TikTok, Reels and Shorts.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "websiteUrl": "https://makeaivideo.ai/docs/mcp",
   "repository": {
     "url": "https://github.com/makeaivideo-ai/mcp",
@@ -19,7 +19,7 @@
     {
       "registryType": "npm",
       "identifier": "@makeaivideo/mcp",
-      "version": "1.0.1",
+      "version": "1.0.3",
       "transport": {
         "type": "stdio"
       },
