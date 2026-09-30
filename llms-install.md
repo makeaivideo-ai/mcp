@@ -20,7 +20,7 @@ Goal: give the user's MCP client the MakeAIVideo tools (44 tools: create AI vide
 3. Requirements: Node.js 18 or newer (`node --version`). No build step, no other environment variables.
 4. Verify: call the `whoami` tool. It returns the key's scopes and the credit balance. Then `get_credits`.
 5. Typical use: `estimate_video_cost`, then a `create_*_video` tool (for example `create_explainer_video` with a `topic`), then poll `get_video_status` respecting `poll_after_seconds` until status is `ready`, then `get_download_url`.
-6. Posting (optional): `list_social_accounts` returns connected accounts. If the account the user wants is missing, call `get_connect_link` and give the link to the user: a person must open it in a browser to approve access. Then `publish_video` with the video id, account ids and caption (confirm them with the user first; posts are public), and poll `get_publish_status`. Supported: TikTok, Instagram, YouTube, Facebook Pages, LinkedIn, Threads, Pinterest, Bluesky, Telegram, Discord. X is not supported.
+6. Posting (optional): `list_social_accounts` returns connected accounts. If the account the user wants is missing, call `get_connect_link` and give the link to the user: a person must open it in a browser to approve access. Then `publish_video` with the video id, account ids and caption (confirm them with the user first; posts are public), and poll `get_publish_status`. Supported: TikTok, Instagram, YouTube, Facebook Pages, LinkedIn, X (videos up to 140 seconds), Threads, Pinterest, Bluesky, Telegram, Discord.
 
 Alternative for clients that support remote MCP with OAuth: connect to `https://mcp.makeaivideo.ai` instead; no key or local process needed.
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 (2026-09-30)
+
+- Posting to X is now supported (videos up to 140 seconds). The bundled `tools.json` snapshot, README and llms-install.md list X. No code changes.
+
 ## 1.0.3 (2026-09-30)
 
 - README: "What you can make with MakeAIVideo" section linking each video type; npm keywords for each video type. No code changes.

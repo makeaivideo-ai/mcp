@@ -23,7 +23,7 @@ import {
 } from "@modelcontextprotocol/sdk/types.js"
 import { readFileSync } from "node:fs"
 
-const VERSION = "1.0.3"
+const VERSION = "1.0.4"
 const REMOTE_URL = process.env.MAKEAIVIDEO_MCP_URL || "https://mcp.makeaivideo.ai"
 const API_KEY = process.env.MAKEAIVIDEO_API_KEY || process.env.MAV_API_KEY || ""
 

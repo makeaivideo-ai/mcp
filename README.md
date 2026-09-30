@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@makeaivideo/mcp.svg)](https://www.npmjs.com/package/@makeaivideo/mcp) [![license](https://img.shields.io/npm/l/@makeaivideo/mcp.svg)](LICENSE)
 
-**Let Claude, ChatGPT, Cursor and any MCP client make finished AI videos and post them.** The [MakeAIVideo](https://makeaivideo.ai) MCP server gives your AI assistant 44 tools to write a script, generate a video with AI voiceover, AI or stock scenes, captions and music, hand back the MP4, and post it (now or scheduled) to your connected [TikTok](https://makeaivideo.ai/tiktok-video-generator), [Instagram Reels](https://makeaivideo.ai/instagram-reels-generator), [YouTube Shorts](https://makeaivideo.ai/ai-shorts-generator), Facebook Pages, LinkedIn, Threads, Pinterest, Bluesky, Telegram and Discord accounts.
+**Let Claude, ChatGPT, Cursor and any MCP client make finished AI videos and post them.** The [MakeAIVideo](https://makeaivideo.ai) MCP server gives your AI assistant 44 tools to write a script, generate a video with AI voiceover, AI or stock scenes, captions and music, hand back the MP4, and post it (now or scheduled) to your connected [TikTok](https://makeaivideo.ai/tiktok-video-generator), [Instagram Reels](https://makeaivideo.ai/instagram-reels-generator), [YouTube Shorts](https://makeaivideo.ai/ai-shorts-generator), Facebook Pages, LinkedIn, X, Threads, Pinterest, Bluesky, Telegram and Discord accounts.
 
 Ask your assistant things like:
 
@@ -68,7 +68,7 @@ Renders take minutes: the assistant creates the video, then polls `get_video_sta
 
 ### Posting to social accounts
 
-`publish_video` posts a finished video to one or more connected accounts, now or at a scheduled time, with one caption or a caption per platform. Supported: TikTok, Instagram (as a Reel), YouTube (as a Short), Facebook (Pages only), LinkedIn, Threads, Pinterest, Bluesky, Telegram and Discord. X is not supported.
+`publish_video` posts a finished video to one or more connected accounts, now or at a scheduled time, with one caption or a caption per platform. Supported: TikTok, Instagram (as a Reel), YouTube (a 9:16 video as a Short, 16:9 as a regular video), Facebook (Pages only), LinkedIn, X (videos up to 140 seconds), Threads, Pinterest, Bluesky, Telegram and Discord.
 
 A person must connect each account once: `get_connect_link` returns a short-lived link that the user opens in a browser to approve access (the assistant cannot complete it). Bluesky, Telegram and Discord connect in the web app. Then `list_social_accounts` returns the account ids, `publish_video` posts, and `get_publish_status` returns the live post URLs.
 
@@ -89,7 +89,7 @@ For a presenter on screen, [AI talking avatar videos](https://makeaivideo.ai/tal
 
 From a still image, [image to video](https://makeaivideo.ai/image-to-video) turns product shots, landscapes and album art into a moving clip, and [animate a photo](https://makeaivideo.ai/animate-a-photo) brings portraits, pets and old family photos to life.
 
-Every video is sized for short-form platforms: use the [TikTok video generator](https://makeaivideo.ai/tiktok-video-generator), the [Instagram Reels generator](https://makeaivideo.ai/instagram-reels-generator) or the [AI YouTube Shorts generator](https://makeaivideo.ai/ai-shorts-generator), or run a [faceless YouTube channel](https://makeaivideo.ai/faceless-youtube-channel) without filming. When a video is ready, [auto-post to social media](https://makeaivideo.ai/auto-post) posts or schedules it to TikTok, Instagram, YouTube, Facebook Pages, LinkedIn, Threads, Pinterest, Bluesky, Telegram and Discord (X is not supported). Plans and credits are on the [MakeAIVideo pricing page](https://makeaivideo.ai/pricing), and AI assistants connect through the [MakeAIVideo MCP server setup guide](https://makeaivideo.ai/docs/mcp).
+Every video is sized for short-form platforms: use the [TikTok video generator](https://makeaivideo.ai/tiktok-video-generator), the [Instagram Reels generator](https://makeaivideo.ai/instagram-reels-generator) or the [AI YouTube Shorts generator](https://makeaivideo.ai/ai-shorts-generator), or run a [faceless YouTube channel](https://makeaivideo.ai/faceless-youtube-channel) without filming. When a video is ready, [auto-post to social media](https://makeaivideo.ai/auto-post) posts or schedules it to TikTok, Instagram, YouTube, Facebook Pages, LinkedIn, X, Threads, Pinterest, Bluesky, Telegram and Discord. Plans and credits are on the [MakeAIVideo pricing page](https://makeaivideo.ai/pricing), and AI assistants connect through the [MakeAIVideo MCP server setup guide](https://makeaivideo.ai/docs/mcp).
 
 From an AI assistant, the `create_*_video` tools cover explainer, listicle, story, UGC, demo, article and spokesperson videos plus your own scripts, and `publish_video` posts the result.
 
@@ -99,7 +99,7 @@ From an AI assistant, the `create_*_video` tools cover explainer, listicle, stor
 
 **Does it cost anything?** MakeAIVideo is a paid product with a 7-day trial (card required). The MCP server has no separate charge: videos use credits from your MakeAIVideo plan, and `estimate_video_cost` quotes before anything is spent. See [pricing](https://makeaivideo.ai/pricing).
 
-**Can it post to social media?** Yes. After you connect an account once, the assistant can post a finished video to TikTok, Instagram, YouTube, Facebook Pages, LinkedIn, Threads, Pinterest, Bluesky, Telegram or Discord, or schedule it. X is not supported.
+**Can it post to social media?** Yes. After you connect an account once, the assistant can post a finished video to TikTok, Instagram, YouTube, Facebook Pages, LinkedIn, X, Threads, Pinterest, Bluesky, Telegram or Discord, or schedule it.
 
 **Which AI assistants work?** Anything that speaks MCP: Claude (web, desktop, Code), ChatGPT, Cursor, VS Code, Windsurf, Cline, Zed and more. See [AI agents](https://makeaivideo.ai/docs/agents).
 

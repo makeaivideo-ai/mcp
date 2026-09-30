@@ -1110,7 +1110,7 @@
     },
     {
       "name": "list_social_accounts",
-      "description": "Free. The social accounts this workspace has connected (id acc_..., platform, name, can_post, needs_reconnection), the plan's account limit (limit, used), and every platform with how it connects. Platforms: TikTok, Instagram (posts as a Reel), YouTube (posts as a Short), Facebook (Pages only), LinkedIn, Threads, Pinterest, Bluesky, Telegram and Discord. X is not available. Call this before publish_video to get account ids; never guess them. An account with can_post false or needs_reconnection true must be reconnected by the user in the web app before posting.",
+      "description": "Free. The social accounts this workspace has connected (id acc_..., platform, name, can_post, needs_reconnection), the plan's account limit (limit, used), and every platform with how it connects. Platforms: TikTok, Instagram (posts as a Reel), YouTube (a 9:16 video posts as a Short, 16:9 as a regular video), Facebook (Pages only), LinkedIn, X (videos up to 140 seconds), Threads, Pinterest, Bluesky, Telegram and Discord. Call this before publish_video to get account ids; never guess them. An account with can_post false or needs_reconnection true must be reconnected by the user in the web app before posting.",
       "inputSchema": {
         "type": "object",
         "properties": {}
@@ -1122,7 +1122,7 @@
     },
     {
       "name": "get_connect_link",
-      "description": "Get a short-lived link that connects one social account. A PERSON must open the link in a browser and approve access; you cannot complete it yourself, so give the link to the user and ask them to open it. Then call list_social_accounts to see the new account. Works for tiktok, instagram (posts as a Reel; uses Instagram login, not Facebook), youtube (posts as a Short), facebook (Pages only), linkedin, threads and pinterest. Bluesky, Telegram and Discord connect with credentials in the web app only (Accounts page): tell the user to connect them there. X is not available. Refused when the plan's account limit is reached.",
+      "description": "Get a short-lived link that connects one social account. A PERSON must open the link in a browser and approve access; you cannot complete it yourself, so give the link to the user and ask them to open it. Then call list_social_accounts to see the new account. Works for tiktok, instagram (posts as a Reel; uses Instagram login, not Facebook), youtube (9:16 posts as a Short), facebook (Pages only), linkedin, x, threads and pinterest. Bluesky, Telegram and Discord connect with credentials in the web app only (Connections page): tell the user to connect them there. Refused when the plan's account limit is reached.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1152,7 +1152,7 @@
     },
     {
       "name": "publish_video",
-      "description": "Post a finished video (status ready) to one or more connected social accounts, now or at a scheduled time. This posts publicly on the user's real accounts: confirm the accounts and caption with the user first. Asynchronous: returns a post id (pub_...) at once; then poll get_publish_status until done is true (respect poll_after_seconds). Platforms: TikTok, Instagram (posts as a Reel), YouTube (posts as a Short), Facebook (Pages only), LinkedIn, Threads, Pinterest, Bluesky, Telegram and Discord. X is not available. Set idempotency_key when retrying so the video is not posted twice.",
+      "description": "Post a finished video (status ready) to one or more connected social accounts, now or at a scheduled time. This posts publicly on the user's real accounts: confirm the accounts and caption with the user first. Asynchronous: returns a post id (pub_...) at once; then poll get_publish_status until done is true (respect poll_after_seconds). Platforms: TikTok, Instagram (posts as a Reel), YouTube (a 9:16 video posts as a Short, 16:9 as a regular video), Facebook (Pages only), LinkedIn, X (videos up to 140 seconds), Threads, Pinterest, Bluesky, Telegram and Discord. Set idempotency_key when retrying so the video is not posted twice.",
       "inputSchema": {
         "type": "object",
         "properties": {

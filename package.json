@@ -1,6 +1,6 @@
 {
   "name": "@makeaivideo/mcp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "mcpName": "ai.makeaivideo/video-generator",
   "description": "MakeAIVideo MCP server (AI video generator for Claude, ChatGPT, Cursor and any MCP client): create finished AI videos with voiceover, scenes, captions and music, then post them to TikTok, Instagram, YouTube and other connected social accounts. 44 tools.",
   "type": "module",
