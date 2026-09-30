@@ -103,6 +103,18 @@ Full reference: [makeaivideo.ai/docs/mcp](https://makeaivideo.ai/docs/mcp).
 - **Compare:** [MakeAIVideo vs HeyGen](https://makeaivideo.ai/compare/heygen), [MakeAIVideo vs Synthesia](https://makeaivideo.ai/compare/synthesia)
 - [Pricing](https://makeaivideo.ai/pricing) · [Free creator tools](https://makeaivideo.ai/tools) · [Blog](https://makeaivideo.ai/blog) · [Help](https://makeaivideo.ai/help) · [Contact](https://makeaivideo.ai/contact)
 
+## Links
+
+- Website: [makeaivideo.ai](https://makeaivideo.ai)
+- MCP setup guide: [makeaivideo.ai/docs/mcp](https://makeaivideo.ai/docs/mcp)
+- Hosted MCP server: `https://mcp.makeaivideo.ai`
+- Developer hub: [makeaivideo.ai/developers](https://makeaivideo.ai/developers)
+- API reference: [makeaivideo.ai/docs/api](https://makeaivideo.ai/docs/api) · OpenAPI: [app.makeaivideo.ai/api/v1/openapi.json](https://app.makeaivideo.ai/api/v1/openapi.json)
+- API keys: [app.makeaivideo.ai/developers](https://app.makeaivideo.ai/developers)
+- npm: [@makeaivideo/mcp](https://www.npmjs.com/package/@makeaivideo/mcp) · [@makeaivideo/sdk](https://www.npmjs.com/package/@makeaivideo/sdk) · [@makeaivideo/cli](https://www.npmjs.com/package/@makeaivideo/cli)
+- GitHub: [makeaivideo-ai/mcp](https://github.com/makeaivideo-ai/mcp) · [makeaivideo-ai/sdk](https://github.com/makeaivideo-ai/sdk) · [makeaivideo-ai/cli](https://github.com/makeaivideo-ai/cli)
+- Support: support@makeaivideo.ai
+
 ## Related packages
 
 | Package | What it is |

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2 (2026-09-30)
+
+- Package metadata only: npm homepage is now https://makeaivideo.ai/docs/mcp, richer keywords, README Links section. No code changes.
+
 ## 1.0.1 (2026-09-30)
 
 - The hosted server now has 44 tools. New: `list_social_accounts`, `get_connect_link`, `publish_video`, `get_publish_status`, `list_posts` (post finished videos to connected TikTok, Instagram, YouTube, Facebook Pages, LinkedIn, Threads, Pinterest, Bluesky, Telegram and Discord accounts, now or scheduled).
