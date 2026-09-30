@@ -81,6 +81,18 @@ Full reference: [makeaivideo.ai/docs/mcp](https://makeaivideo.ai/docs/mcp).
 | `MAKEAIVIDEO_API_KEY` | (required) | Your `mav_` API key |
 | `MAKEAIVIDEO_MCP_URL` | `https://mcp.makeaivideo.ai` | Override the remote endpoint |
 
+## What you can make with MakeAIVideo
+
+MakeAIVideo turns almost any starting point into a finished short-form video. Start from a single idea with [prompt to video](https://makeaivideo.ai/prompt-to-video), or bring your own words with [script to video](https://makeaivideo.ai/script-to-video) and [blog to video](https://makeaivideo.ai/blog-to-video), which narrates a blog post you paste in. To teach a topic, [AI explainer videos](https://makeaivideo.ai/ai-explainer-video) add voiceover, scenes, captions and music in one pass.
+
+For a presenter on screen, [AI talking avatar videos](https://makeaivideo.ai/talking-avatar) lip-sync a presenter you pick, or one made from your own reference photo, to a script. [AI spokesperson videos](https://makeaivideo.ai/ai-spokesperson-video) suit corporate messaging you want to re-render when details change, and [AI UGC video ads](https://makeaivideo.ai/ai-ugc-video) put an AI spokesperson on your ad script for Meta and TikTok. [Character swap](https://makeaivideo.ai/character-swap) replaces the person in a video you upload while the motion and audio stay as filmed.
+
+From a still image, [image to video](https://makeaivideo.ai/image-to-video) turns product shots, landscapes and album art into a moving clip, and [animate a photo](https://makeaivideo.ai/animate-a-photo) brings portraits, pets and old family photos to life.
+
+Every video is sized for short-form platforms: use the [TikTok video generator](https://makeaivideo.ai/tiktok-video-generator), the [Instagram Reels generator](https://makeaivideo.ai/instagram-reels-generator) or the [AI YouTube Shorts generator](https://makeaivideo.ai/ai-shorts-generator), or run a [faceless YouTube channel](https://makeaivideo.ai/faceless-youtube-channel) without filming. When a video is ready, [auto-post to social media](https://makeaivideo.ai/auto-post) posts or schedules it to TikTok, Instagram, YouTube, Facebook Pages, LinkedIn, Threads, Pinterest, Bluesky, Telegram and Discord (X is not supported). Plans and credits are on the [MakeAIVideo pricing page](https://makeaivideo.ai/pricing), and AI assistants connect through the [MakeAIVideo MCP server setup guide](https://makeaivideo.ai/docs/mcp).
+
+From an AI assistant, the `create_*_video` tools cover explainer, listicle, story, UGC, demo, article and spokesperson videos plus your own scripts, and `publish_video` posts the result.
+
 ## FAQ
 
 **What is the MakeAIVideo MCP server?** A Model Context Protocol server that lets AI assistants create finished short-form AI videos with [MakeAIVideo](https://makeaivideo.ai).
@@ -97,11 +109,9 @@ Full reference: [makeaivideo.ai/docs/mcp](https://makeaivideo.ai/docs/mcp).
 
 [MakeAIVideo](https://makeaivideo.ai) is an AI video generator that turns a brief, a prompt or your own script into a finished, captioned short-form video: script, AI voiceover, AI-generated or stock scenes, captions and music, exported as an MP4 ready for TikTok, Instagram Reels and YouTube Shorts.
 
-- **Make videos in the app:** [prompt to video](https://makeaivideo.ai/prompt-to-video), [script to video](https://makeaivideo.ai/script-to-video), [image to video](https://makeaivideo.ai/image-to-video), [talking avatar](https://makeaivideo.ai/talking-avatar), [AI ad maker](https://makeaivideo.ai/ai-ad-maker), [blog to video](https://makeaivideo.ai/blog-to-video)
-- **By format:** [TikTok video generator](https://makeaivideo.ai/tiktok-video-generator), [Instagram Reels generator](https://makeaivideo.ai/instagram-reels-generator), [AI Shorts generator](https://makeaivideo.ai/ai-shorts-generator), [faceless YouTube channel](https://makeaivideo.ai/faceless-youtube-channel), [AI UGC video](https://makeaivideo.ai/ai-ugc-video), [AI explainer video](https://makeaivideo.ai/ai-explainer-video), [AI spokesperson video](https://makeaivideo.ai/ai-spokesperson-video)
 - **For developers:** [developer hub](https://makeaivideo.ai/developers), [API reference](https://makeaivideo.ai/docs/api), [quickstart](https://makeaivideo.ai/docs/quickstart), [authentication](https://makeaivideo.ai/docs/authentication), [webhooks](https://makeaivideo.ai/docs/webhooks), [MCP server](https://makeaivideo.ai/docs/mcp), [AI agents](https://makeaivideo.ai/docs/agents), [CLI](https://makeaivideo.ai/docs/cli)
 - **Compare:** [MakeAIVideo vs HeyGen](https://makeaivideo.ai/compare/heygen), [MakeAIVideo vs Synthesia](https://makeaivideo.ai/compare/synthesia)
-- [Pricing](https://makeaivideo.ai/pricing) · [Free creator tools](https://makeaivideo.ai/tools) · [Blog](https://makeaivideo.ai/blog) · [Help](https://makeaivideo.ai/help) · [Contact](https://makeaivideo.ai/contact)
+- [Free creator tools](https://makeaivideo.ai/tools) · [Blog](https://makeaivideo.ai/blog) · [Help](https://makeaivideo.ai/help) · [Contact](https://makeaivideo.ai/contact)
 
 ## Links
 

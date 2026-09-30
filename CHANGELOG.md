@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3 (2026-09-30)
+
+- README: "What you can make with MakeAIVideo" section linking each video type; npm keywords for each video type. No code changes.
+
 ## 1.0.2 (2026-09-30)
 
 - Package metadata only: npm homepage is now https://makeaivideo.ai/docs/mcp, richer keywords, README Links section. No code changes.
