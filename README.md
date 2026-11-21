@@ -12,7 +12,7 @@ It is the official [Model Context Protocol](https://modelcontextprotocol.io) ser
 | --- | --- |
 | Hosted server | `https://mcp.makeaivideo.ai` (Streamable HTTP, OAuth sign-in, no key to copy) |
 | Local server | `npx -y @makeaivideo/mcp` (stdio, needs `MAKEAIVIDEO_API_KEY`) |
-| Tools | 47: create, plan, edit, deliver and post videos |
+| Tools | 70: create, plan, edit, deliver and post videos |
 | Works with | ChatGPT, Claude, Claude Code, Cursor, VS Code, Codex, Gemini CLI, Windsurf, Grok, Perplexity, Le Chat, Zed, Cline and any MCP client |
 | Output | MP4 in 9:16, 1:1 or 16:9, with captions, in 24 languages |
 | Account | A MakeAIVideo account with credits ([pricing](https://makeaivideo.ai/pricing)) |
@@ -180,7 +180,7 @@ Without a key the local server still starts and lists its tools from the bundled
 | `MAKEAIVIDEO_API_KEY` | (required for tool calls) | Your `mav_` API key |
 | `MAKEAIVIDEO_MCP_URL` | `https://mcp.makeaivideo.ai` | Override the remote endpoint |
 
-## Tools (47)
+## Tools (70)
 
 ### Create videos
 
@@ -195,6 +195,11 @@ Without a key the local server still starts and lists its tools from the bundled
 | `create_article_video` | Turns a blog post, newsletter or other writing into a short |
 | `create_spokesperson_video` | One lip-synced presenter, straight to camera, from a character you pick |
 | `create_video_from_script` | Renders a video from a script you already have |
+| `image_to_video` | Brings one photo to life as a 5, 10 or 15 second clip; add narration and a face in the photo speaks it |
+| `talking_avatar` | The person in your own filmed video says a new script (voice and lip sync onto your clip) |
+| `character_swap` | The person in your 3-60 second video becomes a character or the person in your photos; motion and audio kept |
+| `upload_image_from_url` | Imports an image from a public URL (free) for `image_to_video`, `character_swap` or product photos |
+| `upload_video_from_url` | Imports a video from a public URL (free) for `talking_avatar` or `character_swap` |
 
 Each create tool takes the length, aspect ratio (9:16, 1:1 or 16:9), and an optional character and voice. It returns a video id at once; the render takes minutes.
 
@@ -214,6 +219,7 @@ Each create tool takes the length, aspect ratio (9:16, 1:1 or 16:9), and an opti
 | Tool | What it does |
 | --- | --- |
 | `wait_for_video` | Waits up to about 50 seconds per call and returns done, progress and the download link |
+| `get_video` | Everything about one video: status, the full script with every scene (narration, picture, thumbnail, clip, lip-synced or not), music, voice and any edit in progress |
 | `get_video_status` | Progress of one video, and its download link when ready |
 | `list_my_videos` | Your videos with id, title and status |
 | `get_download_url` | A signed MP4 link for a finished video |
@@ -228,6 +234,10 @@ Each create tool takes the length, aspect ratio (9:16, 1:1 or 16:9), and an opti
 | `update_video` | Edits the title, topic, script or caption settings |
 | `generate_video` | Starts or re-runs generation for a draft |
 | `regenerate_scene` | Redoes one scene, optionally with new narration |
+| `edit_scene_narration` | Changes what one scene says: the line is re-recorded and the picture is kept (cheaper than a remake) |
+| `edit_scene_visual` | Changes what one scene shows: the scene is remade from a new picture description, the line kept |
+| `set_music` | Changes or removes a video's background music, or its volume (free; then `export_video`) |
+| `report_video` | Reports a bad video to our team for review (free) |
 | `regenerate_voice` | Re-records the voiceover with another voice |
 | `cancel_video` | Stops a render and releases its reserved credits |
 | `delete_video` | Deletes a video and its files |
@@ -244,6 +254,9 @@ Each create tool takes the length, aspect ratio (9:16, 1:1 or 16:9), and an opti
 | `preview_voice` | Hear a voice read your text |
 | `generate_music` | A background track (15, 30 or 60 seconds) from a prompt and mood |
 | `list_music` | Your generated tracks |
+| `list_music_library` | The background music library, filtered by mood, with previews (free) |
+| `update_character` | Renames one of your characters, changes its description or its voice |
+| `delete_character` | Deletes one of your own characters |
 | `list_templates` | The template library |
 
 ### Post to social media
@@ -255,6 +268,9 @@ Each create tool takes the length, aspect ratio (9:16, 1:1 or 16:9), and an opti
 | `publish_video` | Posts a finished video now or at a scheduled time, with one caption or one per platform |
 | `get_publish_status` | Result of a post, with the live post URLs |
 | `list_posts` | Past and scheduled posts |
+| `suggest_caption` | A ready-to-post caption with hashtags, written from the video's script (free) |
+| `reschedule_post` | Changes when a scheduled post goes out |
+| `cancel_post` | Cancels a scheduled post on every platform |
 
 ### Account and automation
 
@@ -265,6 +281,13 @@ Each create tool takes the length, aspect ratio (9:16, 1:1 or 16:9), and an opti
 | `get_top_up_link` | A link you open in a browser to add credits (you pay on Stripe's page; the assistant cannot pay) |
 | `create_webhook` | Calls your URL when a video is ready, fails, or is posted, or when credits run low or refill |
 | `list_webhooks` | Your webhooks and their delivery health |
+| `test_webhook` | Sends one signed test event to a webhook's URL |
+| `list_webhook_deliveries` | A webhook's last 50 delivery attempts |
+| `delete_webhook` | Deletes a webhook |
+| `get_workspace` | The workspace's name and saved defaults |
+| `update_workspace` | Renames the workspace or changes its saved defaults |
+| `get_brand_kit` | The workspace watermark and whether new exports carry it |
+| `set_watermark` | Sets, shows, hides or removes the logo watermark from a public image URL |
 
 ## How a video gets made
 
@@ -272,6 +295,7 @@ Each create tool takes the length, aspect ratio (9:16, 1:1 or 16:9), and an opti
 2. If a create result says `started: false`, nothing is rendering or charged: `held` says why, with priced options and the next call to make. Out of credits, it names the shortfall and when the plan refills, and `get_top_up_link` gives you a link to add more.
 3. It calls `wait_for_video` (each call waits up to about 50 seconds) until `done` is true, usually a few minutes.
 4. It returns the MP4 link from `get_download_url`, or posts the video with `publish_video`.
+5. To fix a finished video, `get_video` shows every scene; `edit_scene_narration`, `edit_scene_visual`, `regenerate_scene` and `set_music` change one part, and `export_video` (or `auto_export`) updates the file.
 
 ## Posting to TikTok, Instagram, YouTube and more
 
@@ -293,7 +317,7 @@ Plans and credit costs: [makeaivideo.ai/pricing](https://makeaivideo.ai/pricing)
 
 ### Is there an MCP server for AI video generation?
 
-Yes. The MakeAIVideo MCP server at `https://mcp.makeaivideo.ai` gives any MCP client 47 tools to write scripts, create finished short-form AI videos with voiceover, scenes, captions and music, and post them to social media. It is listed in the official MCP Registry as `ai.makeaivideo/video-generator`.
+Yes. The MakeAIVideo MCP server at `https://mcp.makeaivideo.ai` gives any MCP client 70 tools to write scripts, create finished short-form AI videos with voiceover, scenes, captions and music, and post them to social media. It is listed in the official MCP Registry as `ai.makeaivideo/video-generator`.
 
 ### How do I make AI videos with ChatGPT?
 
@@ -317,7 +341,11 @@ Yes. `create_spokesperson_video` makes a lip-synced presenter video from a chara
 
 ### Can it turn an image into a video, or swap the person in my video?
 
-Not through MCP tools, because both need a file upload. Use the web app or the REST API for [image to video](https://makeaivideo.ai/image-to-video) and [character swap](https://makeaivideo.ai/character-swap).
+Yes. Give the assistant a public link to the photo or video: `upload_image_from_url` or `upload_video_from_url` imports it, then `image_to_video`, `talking_avatar` or `character_swap` makes the video. See [image to video](https://makeaivideo.ai/image-to-video) and [character swap](https://makeaivideo.ai/character-swap).
+
+### Can it fix one scene without making the whole video again?
+
+Yes. `get_video` lists every scene. `edit_scene_narration` changes a scene's line and keeps the picture, `edit_scene_visual` or `regenerate_scene` remakes the picture, and `set_music` swaps the music. Paid edits show the price first and charge nothing until the assistant confirms it with `max_credits`.
 
 ### Do I need an API key?
 

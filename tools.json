@@ -2,7 +2,7 @@
   "tools": [
     {
       "name": "create_explainer_video",
-      "description": "Explainer video: Take one idea and make it land. We open on the question, explain the mechanism, and pay it off. Paid from your credit balance. Call estimate_video_cost with tool \"explainer\" first: it prices every length and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick).",
+      "description": "Explainer video: Take one idea and make it land. We open on the question, explain the mechanism, and pay it off. Paid from your credit balance. Footage: AI-generated scenes by default (mode cinematic, as on the web); a 45-second one is about 810 credits; mode \"stock-narrated\" (stock footage) costs less. Call estimate_video_cost with tool \"explainer\" first: it prices every length, footage and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick). With no plan yet (reason trial_required or plan_required) the result has start_trial_url and say_to_user, and usually video_id with status waiting_for_plan: the video is saved and starts by itself once the trial is active, so say say_to_user, give the link and follow it with wait_for_video instead of calling again.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -36,6 +36,10 @@
             "type": "string",
             "description": "Optional: a voice from list_voices."
           },
+          "music_id": {
+            "type": "string",
+            "description": "Optional background music: a track_id from list_music_library, a generated track from list_music, or \"none\". Default: music picked for the topic."
+          },
           "captions": {
             "type": "boolean",
             "description": "Optional. Captions (burned-in subtitles of the spoken words) are OFF unless you set true or the topic asks for subtitles. Set true only when the user wants captions."
@@ -55,7 +59,7 @@
               "stock-narrated",
               "ai-pictures"
             ],
-            "description": "Footage. \"cinematic\": AI-generated scenes. \"stock-narrated\": stock footage. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills). Default for this tool: stock-narrated."
+            "description": "Footage. \"cinematic\" (default): AI-generated scenes. \"stock-narrated\": stock footage, cheaper. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills)."
           },
           "language": {
             "type": "string",
@@ -67,7 +71,7 @@
               "type": "string"
             },
             "maxItems": 5,
-            "description": "Optional: up to 5 R2 keys of real product photos, uploaded with POST /api/v1/uploads/reference or /uploads/reference-from-url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
+            "description": "Optional: up to 5 image_key values of real product photos, from upload_image_from_url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
           },
           "idempotency_key": {
             "type": "string",
@@ -90,7 +94,7 @@
     },
     {
       "name": "create_listicle_video",
-      "description": "List video: Numbered tips, ranked picks, or things people get wrong. Each item gets its own scene. Paid from your credit balance. Call estimate_video_cost with tool \"listicle\" first: it prices every length and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick).",
+      "description": "List video: Numbered tips, ranked picks, or things people get wrong. Each item gets its own scene. Paid from your credit balance. Footage: AI-generated scenes by default (mode cinematic, as on the web); a 45-second one is about 810 credits; mode \"stock-narrated\" (stock footage) costs less. Call estimate_video_cost with tool \"listicle\" first: it prices every length, footage and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick). With no plan yet (reason trial_required or plan_required) the result has start_trial_url and say_to_user, and usually video_id with status waiting_for_plan: the video is saved and starts by itself once the trial is active, so say say_to_user, give the link and follow it with wait_for_video instead of calling again.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -129,6 +133,10 @@
             "type": "string",
             "description": "Optional: a voice from list_voices."
           },
+          "music_id": {
+            "type": "string",
+            "description": "Optional background music: a track_id from list_music_library, a generated track from list_music, or \"none\". Default: music picked for the topic."
+          },
           "captions": {
             "type": "boolean",
             "description": "Optional. Captions (burned-in subtitles of the spoken words) are OFF unless you set true or the topic asks for subtitles. Set true only when the user wants captions."
@@ -148,7 +156,7 @@
               "stock-narrated",
               "ai-pictures"
             ],
-            "description": "Footage. \"cinematic\": AI-generated scenes. \"stock-narrated\": stock footage. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills). Default for this tool: stock-narrated."
+            "description": "Footage. \"cinematic\" (default): AI-generated scenes. \"stock-narrated\": stock footage, cheaper. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills)."
           },
           "language": {
             "type": "string",
@@ -160,7 +168,7 @@
               "type": "string"
             },
             "maxItems": 5,
-            "description": "Optional: up to 5 R2 keys of real product photos, uploaded with POST /api/v1/uploads/reference or /uploads/reference-from-url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
+            "description": "Optional: up to 5 image_key values of real product photos, from upload_image_from_url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
           },
           "idempotency_key": {
             "type": "string",
@@ -183,7 +191,7 @@
     },
     {
       "name": "create_story_video",
-      "description": "Story video: Open inside the moment, escalate, reveal. Built for history, mysteries and true events. Paid from your credit balance. Call estimate_video_cost with tool \"story\" first: it prices every length and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick).",
+      "description": "Story video: Open inside the moment, escalate, reveal. Built for history, mysteries and true events. Paid from your credit balance. Footage: AI-generated scenes by default (mode cinematic, as on the web); a 45-second one is about 810 credits; mode \"stock-narrated\" (stock footage) costs less. Call estimate_video_cost with tool \"story\" first: it prices every length, footage and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick). With no plan yet (reason trial_required or plan_required) the result has start_trial_url and say_to_user, and usually video_id with status waiting_for_plan: the video is saved and starts by itself once the trial is active, so say say_to_user, give the link and follow it with wait_for_video instead of calling again.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -217,6 +225,10 @@
             "type": "string",
             "description": "Optional: a voice from list_voices."
           },
+          "music_id": {
+            "type": "string",
+            "description": "Optional background music: a track_id from list_music_library, a generated track from list_music, or \"none\". Default: music picked for the topic."
+          },
           "captions": {
             "type": "boolean",
             "description": "Optional. Captions (burned-in subtitles of the spoken words) are OFF unless you set true or the topic asks for subtitles. Set true only when the user wants captions."
@@ -236,7 +248,7 @@
               "stock-narrated",
               "ai-pictures"
             ],
-            "description": "Footage. \"cinematic\": AI-generated scenes. \"stock-narrated\": stock footage. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills). Default for this tool: cinematic."
+            "description": "Footage. \"cinematic\" (default): AI-generated scenes. \"stock-narrated\": stock footage, cheaper. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills)."
           },
           "language": {
             "type": "string",
@@ -248,7 +260,7 @@
               "type": "string"
             },
             "maxItems": 5,
-            "description": "Optional: up to 5 R2 keys of real product photos, uploaded with POST /api/v1/uploads/reference or /uploads/reference-from-url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
+            "description": "Optional: up to 5 image_key values of real product photos, from upload_image_from_url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
           },
           "idempotency_key": {
             "type": "string",
@@ -271,7 +283,7 @@
     },
     {
       "name": "create_ugc_video",
-      "description": "UGC-style ad: Reads like a real recommendation, not an advert. Cold open, honest caveat, soft close. Paid from your credit balance. Call estimate_video_cost with tool \"ugc\" first: it prices every length and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick).",
+      "description": "UGC-style ad: Reads like a real recommendation, not an advert. Cold open, honest caveat, soft close. Paid from your credit balance. Footage: AI-generated scenes by default (mode cinematic, as on the web); a 30-second one is about 553 credits; mode \"stock-narrated\" (stock footage) costs less. Call estimate_video_cost with tool \"ugc\" first: it prices every length, footage and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick). With no plan yet (reason trial_required or plan_required) the result has start_trial_url and say_to_user, and usually video_id with status waiting_for_plan: the video is saved and starts by itself once the trial is active, so say say_to_user, give the link and follow it with wait_for_video instead of calling again.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -310,6 +322,10 @@
             "type": "string",
             "description": "Optional: a voice from list_voices."
           },
+          "music_id": {
+            "type": "string",
+            "description": "Optional background music: a track_id from list_music_library, a generated track from list_music, or \"none\". Default: music picked for the topic."
+          },
           "captions": {
             "type": "boolean",
             "description": "Optional. Captions (burned-in subtitles of the spoken words) are OFF unless you set true or the topic asks for subtitles. Set true only when the user wants captions."
@@ -329,7 +345,7 @@
               "stock-narrated",
               "ai-pictures"
             ],
-            "description": "Footage. \"cinematic\": AI-generated scenes. \"stock-narrated\": stock footage. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills). Default for this tool: stock-narrated."
+            "description": "Footage. \"cinematic\" (default): AI-generated scenes. \"stock-narrated\": stock footage, cheaper. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills)."
           },
           "language": {
             "type": "string",
@@ -341,7 +357,7 @@
               "type": "string"
             },
             "maxItems": 5,
-            "description": "Optional: up to 5 R2 keys of real product photos, uploaded with POST /api/v1/uploads/reference or /uploads/reference-from-url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
+            "description": "Optional: up to 5 image_key values of real product photos, from upload_image_from_url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
           },
           "idempotency_key": {
             "type": "string",
@@ -364,7 +380,7 @@
     },
     {
       "name": "create_demo_video",
-      "description": "Product demo: Show the job getting done, step by step, and end on the result. Paid from your credit balance. Call estimate_video_cost with tool \"demo\" first: it prices every length and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick).",
+      "description": "Product demo: Show the job getting done, step by step, and end on the result. Paid from your credit balance. Footage: AI-generated scenes by default (mode cinematic, as on the web); a 45-second one is about 810 credits; mode \"stock-narrated\" (stock footage) costs less. Call estimate_video_cost with tool \"demo\" first: it prices every length, footage and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick). With no plan yet (reason trial_required or plan_required) the result has start_trial_url and say_to_user, and usually video_id with status waiting_for_plan: the video is saved and starts by itself once the trial is active, so say say_to_user, give the link and follow it with wait_for_video instead of calling again.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -403,6 +419,10 @@
             "type": "string",
             "description": "Optional: a voice from list_voices."
           },
+          "music_id": {
+            "type": "string",
+            "description": "Optional background music: a track_id from list_music_library, a generated track from list_music, or \"none\". Default: music picked for the topic."
+          },
           "captions": {
             "type": "boolean",
             "description": "Optional. Captions (burned-in subtitles of the spoken words) are OFF unless you set true or the topic asks for subtitles. Set true only when the user wants captions."
@@ -422,7 +442,7 @@
               "stock-narrated",
               "ai-pictures"
             ],
-            "description": "Footage. \"cinematic\": AI-generated scenes. \"stock-narrated\": stock footage. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills). Default for this tool: stock-narrated."
+            "description": "Footage. \"cinematic\" (default): AI-generated scenes. \"stock-narrated\": stock footage, cheaper. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills)."
           },
           "language": {
             "type": "string",
@@ -434,7 +454,7 @@
               "type": "string"
             },
             "maxItems": 5,
-            "description": "Optional: up to 5 R2 keys of real product photos, uploaded with POST /api/v1/uploads/reference or /uploads/reference-from-url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
+            "description": "Optional: up to 5 image_key values of real product photos, from upload_image_from_url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
           },
           "idempotency_key": {
             "type": "string",
@@ -457,7 +477,7 @@
     },
     {
       "name": "create_article_video",
-      "description": "Article to video: Paste a blog post, newsletter or any writing. We select the spine and turn it into a short. Paid from your credit balance. Call estimate_video_cost with tool \"article\" first: it prices every length and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick).",
+      "description": "Article to video: Paste a blog post, newsletter or any writing. We select the spine and turn it into a short. Paid from your credit balance. Footage: AI-generated scenes by default (mode cinematic, as on the web); a 60-second one is about 1,066 credits; mode \"stock-narrated\" (stock footage) costs less. Call estimate_video_cost with tool \"article\" first: it prices every length, footage and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick). With no plan yet (reason trial_required or plan_required) the result has start_trial_url and say_to_user, and usually video_id with status waiting_for_plan: the video is saved and starts by itself once the trial is active, so say say_to_user, give the link and follow it with wait_for_video instead of calling again.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -491,6 +511,10 @@
             "type": "string",
             "description": "Optional: a voice from list_voices."
           },
+          "music_id": {
+            "type": "string",
+            "description": "Optional background music: a track_id from list_music_library, a generated track from list_music, or \"none\". Default: music picked for the topic."
+          },
           "captions": {
             "type": "boolean",
             "description": "Optional. Captions (burned-in subtitles of the spoken words) are OFF unless you set true or the topic asks for subtitles. Set true only when the user wants captions."
@@ -510,7 +534,7 @@
               "stock-narrated",
               "ai-pictures"
             ],
-            "description": "Footage. \"cinematic\": AI-generated scenes. \"stock-narrated\": stock footage. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills). Default for this tool: stock-narrated."
+            "description": "Footage. \"cinematic\" (default): AI-generated scenes. \"stock-narrated\": stock footage, cheaper. \"ai-pictures\": AI still pictures with slow camera moves (Cinematic stills)."
           },
           "language": {
             "type": "string",
@@ -522,7 +546,7 @@
               "type": "string"
             },
             "maxItems": 5,
-            "description": "Optional: up to 5 R2 keys of real product photos, uploaded with POST /api/v1/uploads/reference or /uploads/reference-from-url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
+            "description": "Optional: up to 5 image_key values of real product photos, from upload_image_from_url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
           },
           "idempotency_key": {
             "type": "string",
@@ -545,7 +569,7 @@
     },
     {
       "name": "create_spokesperson_video",
-      "description": "Spokesperson video: One presenter, straight to camera, for announcements and messages from you. Paid from your credit balance. Call estimate_video_cost with tool \"spokesperson\" first: it prices every length and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick).",
+      "description": "Spokesperson video: One presenter, straight to camera, for announcements and messages from you. Paid from your credit balance: a 30-second one is about 574 credits. Call estimate_video_cost with tool \"spokesperson\" first: it prices every length, footage and quality against the balance. Returns a video id immediately (started: true); the script and render take minutes: call wait_for_video with the id until done is true. For a plain topic, make_video is the one-call path. If the balance does not cover it, or the price is above max_credits, nothing is created or charged and the result has started: false and held { reason, credits, balance, options[], next_call }: show the user the options and make next_call (or the option they pick). With no plan yet (reason trial_required or plan_required) the result has start_trial_url and say_to_user, and usually video_id with status waiting_for_plan: the video is saved and starts by itself once the trial is active, so say say_to_user, give the link and follow it with wait_for_video instead of calling again.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -584,6 +608,10 @@
             "type": "string",
             "description": "Optional: a voice from list_voices."
           },
+          "music_id": {
+            "type": "string",
+            "description": "Optional background music: a track_id from list_music_library, a generated track from list_music, or \"none\". Default: music picked for the topic."
+          },
           "captions": {
             "type": "boolean",
             "description": "Optional. Captions (burned-in subtitles of the spoken words) are OFF unless you set true or the topic asks for subtitles. Set true only when the user wants captions."
@@ -606,7 +634,7 @@
               "type": "string"
             },
             "maxItems": 5,
-            "description": "Optional: up to 5 R2 keys of real product photos, uploaded with POST /api/v1/uploads/reference or /uploads/reference-from-url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
+            "description": "Optional: up to 5 image_key values of real product photos, from upload_image_from_url. Product scenes are rendered from these photos instead of an invented product. Most useful for demo and ugc videos."
           },
           "idempotency_key": {
             "type": "string",
@@ -629,18 +657,35 @@
     },
     {
       "name": "make_video",
-      "description": "The quickest way to make a video: one call from a topic to a video that is being made. AI-generated scenes, Best quality and voiceover; captions only when asked. Paid from the credit balance. It prices the video first (free) and starts it when the balance covers it. Without length_seconds it picks the longest length the balance covers, up to the default. Returns video_id with started: true; then call wait_for_video with it until done is true. started: false means nothing was created or charged: reason and held say why. With reason trial_required or plan_required the account has no plan yet: give the user start_trial_url and retry after they confirm. For a stock-footage video, a template, or your own script, use the create_* tools or create_video_from_script instead.",
+      "description": "The quickest way to make a video: one call from the user's request to a video that is being made. It is written the way the web app's Create box reads it: Prompt to video for an idea, a skit, an ad, a story, a scene or a finished script (or the Explainer, Tips and lists, Story, UGC ad, Product demo or Article tool when the request names one). AI-generated scenes, Best quality and voiceover by default; captions only when asked. Paid from the credit balance: a 30-second Prompt to video is about 553 credits (estimate_video_cost with kind \"prompt-to-video\" prices any length). It prices the video first (free) and starts it when the balance covers it. Without length_seconds it uses the length the request states, else the longest the balance covers up to 30 seconds (a named tool: up to its own default). Returns video_id with started: true and written_as (the tool that wrote it); then call wait_for_video with it until done is true. started: false means nothing was charged: reason and held say why. With reason trial_required or plan_required the account has no plan yet: give the user start_trial_url (the plan page) and say say_to_user word for word, e.g. \"Open this link to start your free 7-day trial (card required, $0 today). Your video will start automatically once it's active.\" When the result has video_id and status waiting_for_plan, the video is saved: do not call make_video again. It starts by itself once the trial is active, and wait_for_video with that video_id follows it. reason needs_file: the request needs the user's photo or video (next_step names the tools). For a template's look pass template_id (list_templates). For your own script use create_video_from_script; for a photo or a video of the user, image_to_video, talking_avatar or character_swap.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "topic": {
             "type": "string",
             "maxLength": 20000,
-            "description": "What the video is about, in the user's words. One clear idea works best."
+            "description": "The request in the user's words: what the video is, who is in it, the tone, anything it must say.",
+            "examples": [
+              "A 30-second skit: a cat barista who refuses to make decaf",
+              "An ad for our oat-milk latte, upbeat, ends with 'Order on the app'"
+            ]
           },
           "length_seconds": {
             "type": "number",
-            "description": "Optional target length in seconds. Options: 15, 30, 45, 60, 90. Default: the longest the balance covers, up to 45."
+            "description": "Optional target length in seconds, e.g. 15, 30, 60, 120, 180. Default: the length the request states, else the longest the balance covers up to 30."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "cinematic",
+              "stock-narrated",
+              "ai-pictures"
+            ],
+            "description": "Optional footage. \"cinematic\" (default): AI-generated scenes. \"stock-narrated\": stock footage, cheaper. \"ai-pictures\": AI still pictures with slow camera moves."
+          },
+          "template_id": {
+            "type": "string",
+            "description": "Optional: a template_id from list_templates. The video takes that template's look (footage, shape, voice, music, captions, length); the topic gives the words."
           },
           "quality": {
             "type": "string",
@@ -688,17 +733,25 @@
     },
     {
       "name": "wait_for_video",
-      "description": "Wait for a video on the server, up to about 50 seconds per call, and return its progress: status, stage (scripting, waiting_for_slot, making_scenes, rendering, finishing_file, ready, failed, draft), progress_note, scenes_done of scenes_total, and download_url (the MP4, valid 15 minutes) once it is ready. done: true means nothing more will happen without a call (ready, failed, or a draft that needs generate_video). Otherwise call it again with the same video_id. Use it instead of polling get_video_status.",
+      "description": "Free. Wait for a video on the server, up to about 50 seconds per call, and return its progress: status, stage (waiting_for_plan, scripting, waiting_for_slot, making_scenes, rendering, finishing_file, remaking_scene, re_voicing, updating_file, ready, failed, draft), progress_note and scenes_done of scenes_total. Also use it after regenerate_scene, edit_scene_narration, edit_scene_visual, regenerate_voice or export_video: it waits until the change is in the file. done: true means nothing more will happen without a call (ready, failed, or a draft that needs generate_video); otherwise call it again with the same video_id. waiting_for_plan: the account has no plan yet; give the user start_trial_url and say_to_user, and the video starts by itself once the trial is active. Once ready it gives web_url (the user's page, lasting) and download_url (15 minutes).",
       "inputSchema": {
         "type": "object",
         "properties": {
           "video_id": {
             "type": "string",
-            "description": "Public id, e.g. vid_abc123"
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
           }
         },
         "required": [
           "video_id"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123"
+          }
         ]
       },
       "annotations": {
@@ -708,7 +761,7 @@
     },
     {
       "name": "estimate_video_cost",
-      "description": "Free. Quote a video in credits before creating it, e.g. a 15-second AI video is about 297 credits. Send tool (a create_* tool id) OR script (for create_video_from_script). Returns the price as asked, the balance, and options[]: every mode, quality and length the call could use, each with credits and affordable (true when the balance covers it). Pick an affordable option and pass its mode and quality to the create call. For a script it also says whether the narration fits the length (length.fits) and, if not, the price of every line at the length it needs and of the opening word for word. Never drop the user's lines to save credits without asking them: show the options.",
+      "description": "Free. Quote a video in credits before creating it, e.g. a 15-second AI video is about 297 credits. Send exactly one of: tool (a create_* tool id), script (for create_video_from_script), or kind (for make_video \"prompt-to-video\", image_to_video \"image-to-video\", talking_avatar \"talking-avatar\", character_swap \"character-swap\", with text and duration_seconds as below). Returns the price as asked, the balance, and options[]: every mode, quality and length the call could use, each with credits and affordable (true when the balance covers it). Pick an affordable option and pass its mode and quality to the create call. For a script it also says whether the narration fits the length (length.fits) and, if not, the price of every line at the length it needs and of the opening word for word. Never drop the user's lines to save credits without asking them: show the options.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -723,11 +776,25 @@
               "article",
               "spokesperson"
             ],
-            "description": "Which create tool the video would use. Use this OR script."
+            "description": "Which create_* tool the video would use. Use this, script OR kind."
           },
           "script": {
             "type": "object",
-            "description": "The script you would send to create_video_from_script. Use this OR tool."
+            "description": "The script you would send to create_video_from_script. Use this, tool OR kind."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "prompt-to-video",
+              "image-to-video",
+              "talking-avatar",
+              "character-swap"
+            ],
+            "description": "The create the price is for: \"prompt-to-video\" (make_video), \"image-to-video\", \"talking-avatar\" or \"character-swap\". Use this, tool OR script."
+          },
+          "text": {
+            "type": "string",
+            "description": "With kind: the topic (prompt-to-video, prices stock footage better), the narration line (image-to-video, optional), or the exact words said (talking-avatar, required)."
           },
           "mode": {
             "type": "string",
@@ -739,11 +806,11 @@
               "smart-mix",
               "ai-pictures"
             ],
-            "description": "With script: the mode you would create in. Default cinematic. With tool: the footage, \"cinematic\" (AI scenes), \"stock-narrated\" (stock) or \"ai-pictures\" (AI still pictures); default the tool's own."
+            "description": "With script: the mode you would create in. Default cinematic. With tool or kind prompt-to-video: the footage, \"cinematic\" (AI scenes, the default), \"stock-narrated\" (stock) or \"ai-pictures\" (AI still pictures)."
           },
           "duration_seconds": {
             "type": "number",
-            "description": "With tool: the length."
+            "description": "With tool or kind: the length (character-swap: the clip's length, required; image-to-video: 5, 10 or 15)."
           },
           "max_duration_seconds": {
             "type": "number",
@@ -763,7 +830,22 @@
             ],
             "description": "AI video quality. \"best\" (default): our sharpest, most detailed AI video. \"fast\": faster and cheaper, a bit less detail. Only use \"fast\" when the user asks for it."
           }
-        }
+        },
+        "examples": [
+          {
+            "tool": "story",
+            "duration_seconds": 30
+          },
+          {
+            "kind": "prompt-to-video",
+            "text": "a 30-second skit about a cat who runs a coffee shop",
+            "duration_seconds": 30
+          },
+          {
+            "kind": "character-swap",
+            "duration_seconds": 12
+          }
+        ]
       },
       "annotations": {
         "readOnlyHint": true,
@@ -772,17 +854,25 @@
     },
     {
       "name": "get_video_status",
-      "description": "Check one video's progress once, without waiting. Returns status, stage, a progress note, waiting_for_slot, failed_stage and error when it failed, and download_url when ready. To wait for a video, call wait_for_video instead: it waits on the server and needs far fewer calls.",
+      "description": "Free. Check one video's progress once, without waiting: status, stage, progress_note, scenes_done of scenes_total, waiting_for_slot, edit (a scene remake, re-voice or export still changing a finished video), failed_stage and error when it failed. Once ready: web_url (the user's page, lasting), thumbnail_url and download_url (15 minutes). To wait, call wait_for_video instead: it waits on the server and needs far fewer calls.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "video_id": {
             "type": "string",
-            "description": "Public id, e.g. vid_abc123"
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
           }
         },
         "required": [
           "video_id"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123"
+          }
         ]
       },
       "annotations": {
@@ -792,10 +882,43 @@
     },
     {
       "name": "list_my_videos",
-      "description": "List this account's videos (id, title, status). Use it to recover a video id rather than guessing one.",
+      "description": "Free. This workspace's videos, newest first: video_id, title, status, created_at, thumbnail_url, web_url, duration and credits used. Pages of `limit` (default 20, max 100); pass next_cursor as cursor for the next page (null = no more). Filter by status. Use it to find a video id rather than guessing one, then get_video for the details.",
       "inputSchema": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 20
+          },
+          "cursor": {
+            "type": "string",
+            "description": "next_cursor from the previous page."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "scripting",
+              "generating",
+              "scenes-ready",
+              "composing",
+              "ready",
+              "failed"
+            ],
+            "description": "Optional: only videos in this status."
+          }
+        },
+        "examples": [
+          {
+            "limit": 20
+          },
+          {
+            "status": "ready",
+            "limit": 10
+          }
+        ]
       },
       "annotations": {
         "readOnlyHint": true,
@@ -849,7 +972,7 @@
     },
     {
       "name": "get_download_url",
-      "description": "A signed URL for a finished video's MP4, valid 15 minutes. Only works once get_video_status reports ready. If the file is still being written it returns a retryable error; wait a few seconds and call again.",
+      "description": "A signed URL for a finished video's MP4, valid 15 minutes. Only works once wait_for_video (or get_video_status) reports ready; wait_for_video already returns download_url then. If the file is still being written it returns a retryable error; wait a few seconds and call again.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -926,7 +1049,7 @@
     },
     {
       "name": "list_templates",
-      "description": "Free. The template library (id, title, which create tool it maps to).",
+      "description": "Free. The template library: finished example videos (template_id, title, blurb, category, footage, aspect_ratio, duration_seconds, preview video_url). Pass template_id to make_video to make a new video with that template's look (footage, shape, voice, music, captions, length); the user's topic gives the words.",
       "inputSchema": {
         "type": "object",
         "properties": {}
@@ -994,13 +1117,40 @@
     },
     {
       "name": "create_video_from_script",
-      "description": "Render a video from a script you already have (from write_script, structure_text, or your own). Costs credits. Price it first with estimate_video_cost { script, mode, quality }. Read `started` in the result. started: true = it is rendering, poll get_video_status. started: false = it is not rendering, and held says why: held.reason, held.credits (the price), held.balance, held.changes, held.options[] (each priced, with affordable and the exact next_call) and held.next_call. Nothing renders until you make a call: show the user the options when a choice changes their video (fewer lines, other length, other quality), then make next_call or the option they pick. We never cut or rewrite the user's lines. Reason codes: draft_requested: Saved as a draft (start_generation was false, or it was saved in the web editor). A draft never renders by itself: call generate_video with its video_id to start it. insufficient_credits: The balance does not cover this video. Nothing was created and nothing was charged. Pick an option the balance covers, or top up. price_over_limit: The price is above the max_credits you sent. Nothing was created. Confirm by sending the same call with max_credits at or above the price, or pick a cheaper option. script_over_length: The narration takes longer to read than the length allows, even read faster. Nothing was created and no line was cut. Pick all of it at a longer length, the opening word for word, or allow_faster_read: true. over_length_cap: The script is longer than this mode can make in one video. Nothing was created. Pick the opening word for word, or a mode with a longer limit. plan_mode: The account's plan does not include this mode. Nothing was created. Pick a mode the plan includes. trial_required: The account has no plan or trial yet, so it cannot make videos. Nothing was created and nothing was charged. Give the user held.start_trial_url to start the free trial in their browser, then make the same call again after they confirm it has started. plan_required: The account has no active plan, so it cannot make videos. Nothing was created and nothing was charged. Give the user held.start_trial_url to choose a plan in their browser, then make the same call again after they confirm.",
+      "description": "Render a video from a script you already have (from write_script, structure_text, or your own). Costs credits. Price it first with estimate_video_cost { script, mode, quality }. Read `started` in the result. started: true = it is rendering: call wait_for_video with the video_id until done is true. started: false = it is not rendering, and held says why: held.reason, held.credits (the price), held.balance, held.changes, held.options[] (each priced, with affordable and the exact next_call) and held.next_call. Nothing renders until you make a call: show the user the options when a choice changes their video (fewer lines, other length, other quality), then make next_call or the option they pick. We never cut or rewrite the user's lines. Reason codes: draft_requested: Saved as a draft (start_generation was false, or it was saved in the web editor). A draft never renders by itself: call generate_video with its video_id to start it. insufficient_credits: The balance does not cover this video. Nothing was created and nothing was charged. Pick an option the balance covers, or top up. price_over_limit: The price is above the max_credits you sent. Nothing was created. Confirm by sending the same call with max_credits at or above the price, or pick a cheaper option. script_over_length: The narration takes longer to read than the length allows, even read faster. Nothing was created and no line was cut. Pick all of it at a longer length, the opening word for word, or allow_faster_read: true. over_length_cap: The script is longer than this mode can make in one video. Nothing was created. Pick the opening word for word, or a mode with a longer limit. plan_mode: The account's plan does not include this mode. Nothing was created. Pick a mode the plan includes. trial_required: The account has no plan or trial yet, so it cannot make videos. Nothing was charged. Give the user held.start_trial_url and say held.say_to_user. With held.pending_video_id the video is saved and starts by itself once the trial is active: follow it with wait_for_video, do not make the call again. Without it, make the same call again after they confirm the trial has started. plan_required: The account has no active plan, so it cannot make videos. Nothing was charged. Give the user held.start_trial_url to choose a plan and say held.say_to_user. With held.pending_video_id the video is saved and starts by itself once the plan is active: follow it with wait_for_video. Without it, make the same call again after they confirm.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "script": {
             "type": "object",
-            "description": "The script object: title, hook, scenes[{scene_number, narration, visual_description, duration_seconds, scene_type?}], total_duration_seconds, hashtags?"
+            "description": "The script object: title, hook, scenes[{scene_number, narration, visual_description, duration_seconds, scene_type?}], total_duration_seconds, hashtags?",
+            "examples": [
+              {
+                "title": "Why cats knock things off tables",
+                "hook": "Your cat isn't being rude. It's running an experiment.",
+                "scenes": [
+                  {
+                    "scene_number": 1,
+                    "narration": "Your cat isn't being rude. It's running an experiment.",
+                    "visual_description": "A tabby cat on a kitchen counter eyeing a coffee mug, close-up",
+                    "duration_seconds": 5
+                  },
+                  {
+                    "scene_number": 2,
+                    "narration": "Cats are hunters, and pushing things tests if they're alive.",
+                    "visual_description": "Slow motion: a paw nudging a pen toward the edge of a desk",
+                    "duration_seconds": 6
+                  },
+                  {
+                    "scene_number": 3,
+                    "narration": "And when it falls, you come running. Experiment complete.",
+                    "visual_description": "The cat looks up at its owner rushing in, smug expression",
+                    "duration_seconds": 5
+                  }
+                ],
+                "total_duration_seconds": 16
+              }
+            ]
           },
           "mode": {
             "type": "string",
@@ -1023,7 +1173,7 @@
           },
           "music_id": {
             "type": "string",
-            "description": "Optional: from list_music."
+            "description": "Optional: a track_id from list_music_library, a generated track from list_music, or \"none\"."
           },
           "aspect_ratio": {
             "type": "string",
@@ -1089,7 +1239,7 @@
     },
     {
       "name": "structure_text",
-      "description": "Turn prose or a hand-written script into our structured scene script (free apart from a small AI cost). Then create_video_from_script.",
+      "description": "Free (no credits). Turn prose or a hand-written script into our structured scene script, keeping the user's words. Then create_video_from_script with it.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1098,7 +1248,15 @@
             "minLength": 20
           },
           "mode": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "talking-head",
+              "cinematic",
+              "hybrid",
+              "stock-narrated",
+              "smart-mix",
+              "ai-pictures"
+            ]
           },
           "target_duration": {
             "type": "number"
@@ -1109,7 +1267,8 @@
         ]
       },
       "annotations": {
-        "readOnlyHint": true,
+        "readOnlyHint": false,
+        "destructiveHint": false,
         "title": "Structure text"
       }
     },
@@ -1135,24 +1294,47 @@
     },
     {
       "name": "update_video",
-      "description": "Edit a video's title, topic, script or caption settings. Script edits apply on the next generate_video. A title-only change works at any time, even while the video renders; other edits are refused while it generates.",
+      "description": "Free. Edit a video's title, topic, script or captions. A title works at any time. Captions: caption_style (\"none\" turns them off) and caption_alignment; on a finished video they are saved to the project, then call export_video to put them in the file. A script edit applies on the next generate_video (to change one scene of a finished video use edit_scene_narration or edit_scene_visual instead). Edits other than the title are refused while the video is being made.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "video_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
           },
           "topic": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 4000
           },
           "script": {
-            "type": "object"
+            "type": "object",
+            "description": "The whole script (as get_video returns it, camel or snake case), for a draft."
           },
           "caption_style": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "basic",
+              "ali",
+              "movie",
+              "word-pop",
+              "hormozi",
+              "bold",
+              "beat",
+              "outline",
+              "banner",
+              "giant-numbered",
+              "minimal",
+              "none"
+            ],
+            "description": "Caption look. \"basic\": Classic (default when captions are on); \"ali\": Subtle; \"movie\": Subtitle (italic); \"word-pop\": Word pop; \"hormozi\": Hormozi; \"bold\": Bold; \"beat\": Beat; \"outline\": Outline; \"banner\": Banner; \"giant-numbered\": Giant numbered; \"minimal\": Minimal; \"none\": None (captions off)."
           },
           "caption_alignment": {
             "type": "string",
@@ -1160,11 +1342,23 @@
               "top",
               "middle",
               "bottom"
-            ]
+            ],
+            "description": "Where captions sit. Default: the style's own."
           }
         },
         "required": [
           "video_id"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123",
+            "caption_style": "bold",
+            "caption_alignment": "bottom"
+          },
+          {
+            "video_id": "vid_abc123",
+            "title": "Spring sale"
+          }
         ]
       },
       "annotations": {
@@ -1175,7 +1369,7 @@
     },
     {
       "name": "generate_video",
-      "description": "Start a draft (status draft, or a create result with held.reason draft_requested), or re-run after update_video edits. A draft never starts by itself; this is the call that starts it. Costs credits: get_video_status on a draft shows its price in held.credits.",
+      "description": "Start a draft (status draft, or a create result with held.reason draft_requested), or re-run after update_video edits. A draft never starts by itself; this is the call that starts it. Costs credits: get_video_status on a draft shows its price in held.credits. Then call wait_for_video with the video_id until done is true.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1195,18 +1389,36 @@
     },
     {
       "name": "regenerate_scene",
-      "description": "Redo one scene's visuals, optionally with new narration. Costs credits.",
+      "description": "Remake one scene of a finished video: a new clip (picture and motion), optionally with a new spoken line (narration) and/or a new picture description (visual_description). Paid from the credit balance; the price shows first. Call get_video first to see the scenes. Without max_credits this returns the price (remake + the export after it) and charges nothing; call again with max_credits to do it. If get_video shows free_remake on the scene (our quality check flagged it), set use_free_remake true: the remake and its export are free (same line and quality). With auto_export (default) the video file is exported again when the scene is done; then wait_for_video until done is true.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "video_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
           },
           "scene_number": {
-            "type": "number"
+            "type": "integer",
+            "minimum": 1,
+            "description": "Scene number, from get_video's scenes[].scene_number.",
+            "examples": [
+              2
+            ]
           },
           "narration": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "description": "Optional new spoken line for the scene (the voice is re-recorded with it)."
+          },
+          "visual_description": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 2000,
+            "description": "Optional new description of what the scene shows. Default: the scene's current one."
           },
           "quality": {
             "type": "string",
@@ -1214,11 +1426,45 @@
               "best"
             ],
             "description": "Optional. \"best\" remakes a scene of a Fast video in Best quality, at the Best price."
+          },
+          "use_free_remake": {
+            "type": "boolean",
+            "description": "Use the scene's free remake (get_video scenes[].free_remake, or a trial's first free remake). Keeps the line and quality."
+          },
+          "auto_export": {
+            "type": "boolean",
+            "default": true,
+            "description": "Default true: when the change is done, the video file is exported again by itself so the download has it (the export is included in the price). false: change only the project; call export_video later."
+          },
+          "max_credits": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The price the user agreed to. Without it the call only returns the price (nothing is charged); call again with max_credits set to that price (or more) to do it. Above it, nothing is charged.",
+            "examples": [
+              120
+            ]
+          },
+          "idempotency_key": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "Optional. Re-sending the same key returns the first answer instead of doing (and charging for) the change again. Set it when retrying."
           }
         },
         "required": [
           "video_id",
           "scene_number"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123",
+            "scene_number": 2
+          },
+          {
+            "video_id": "vid_abc123",
+            "scene_number": 2,
+            "visual_description": "A close-up of the coffee cup on a sunny windowsill",
+            "max_credits": 120
+          }
         ]
       },
       "annotations": {
@@ -1229,15 +1475,23 @@
     },
     {
       "name": "regenerate_voice",
-      "description": "Re-record the voiceover with another voice (from list_voices). Costs credits.",
+      "description": "Re-record the whole voiceover with another voice (voice_id from list_voices). Paid (about 2 credits per second of narration, plus the export with auto_export); the price shows first. Without max_credits this returns the price and charges nothing; call again with max_credits to do it. Characters who speak their own lines keep their voices. After it starts, then wait_for_video until done is true.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "video_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
           },
           "voice_id": {
-            "type": "string"
+            "type": "string",
+            "description": "A voice from list_voices.",
+            "examples": [
+              "EXAVITQu4vr4xnSDxMaL"
+            ]
           },
           "voice_stability": {
             "type": "string",
@@ -1245,12 +1499,37 @@
               "stable",
               "balanced",
               "expressive"
+            ],
+            "description": "Optional. Default: the video's current setting (balanced)."
+          },
+          "auto_export": {
+            "type": "boolean",
+            "default": true,
+            "description": "Default true: when the change is done, the video file is exported again by itself so the download has it (the export is included in the price). false: change only the project; call export_video later."
+          },
+          "max_credits": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The price the user agreed to. Without it the call only returns the price (nothing is charged); call again with max_credits set to that price (or more) to do it. Above it, nothing is charged.",
+            "examples": [
+              120
             ]
+          },
+          "idempotency_key": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "Optional. Re-sending the same key returns the first answer instead of doing (and charging for) the change again. Set it when retrying."
           }
         },
         "required": [
           "video_id",
           "voice_id"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123",
+            "voice_id": "EXAVITQu4vr4xnSDxMaL"
+          }
         ]
       },
       "annotations": {
@@ -1261,16 +1540,39 @@
     },
     {
       "name": "export_video",
-      "description": "Export (render) the video again after edits. Returns a render id; poll get_video_status.",
+      "description": "Export (render) the video file again, after update_video caption changes, set_music, or a change made with auto_export false. Paid (a small render price; free after a free remake, and free when nothing changed since the last paid export); the price shows first. Without max_credits this returns the most it costs and charges nothing; call again with max_credits to do it; then wait_for_video until done is true.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "video_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
+          },
+          "max_credits": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The price the user agreed to. Without it the call only returns the price (nothing is charged); call again with max_credits set to that price (or more) to do it. Above it, nothing is charged.",
+            "examples": [
+              120
+            ]
+          },
+          "idempotency_key": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "Optional. Re-sending the same key returns the first answer instead of doing (and charging for) the change again. Set it when retrying."
           }
         },
         "required": [
           "video_id"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123",
+            "max_credits": 20
+          }
         ]
       },
       "annotations": {
@@ -1351,7 +1653,7 @@
     },
     {
       "name": "generate_ideas",
-      "description": "Scored video ideas for a niche and audience.",
+      "description": "Scored video ideas for a niche and audience. Costs 3 credits per call. Pass an idea to make_video as its topic.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1380,13 +1682,14 @@
         ]
       },
       "annotations": {
-        "readOnlyHint": true,
+        "readOnlyHint": false,
+        "destructiveHint": true,
         "title": "Ideas"
       }
     },
     {
       "name": "enhance_prompt",
-      "description": "Rewrite a rough topic into a stronger brief before creating.",
+      "description": "Rewrite a rough topic into a stronger brief before creating. Costs 1 credit per call. Pass the result to make_video as its topic.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1399,13 +1702,14 @@
         ]
       },
       "annotations": {
-        "readOnlyHint": true,
+        "readOnlyHint": false,
+        "destructiveHint": true,
         "title": "Enhance prompt"
       }
     },
     {
       "name": "generate_character_portraits",
-      "description": "Generate 1-4 portrait candidates for a new character from a description. Costs credits. Returns r2_key values to pass to create_character.",
+      "description": "Generate 1-4 portrait candidates for a new character from a description. Costs 16 credits per portrait. Each result has a url (to show the user) and an r2_key: pass the chosen one's r2_key to create_character as portrait_temp_key.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1413,10 +1717,26 @@
             "type": "string"
           },
           "style": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "hyper-realistic",
+              "cinematic",
+              "3d-render",
+              "3d-isometric",
+              "anime",
+              "hand-drawn-fantasy",
+              "cartoon",
+              "comic-book",
+              "watercolor",
+              "cyberpunk",
+              "pixel-art",
+              "minimalist-flat"
+            ]
           },
           "count": {
-            "type": "number"
+            "type": "number",
+            "minimum": 1,
+            "maximum": 4
           },
           "reference_image_urls": {
             "type": "array",
@@ -1438,12 +1758,13 @@
     },
     {
       "name": "generate_voice_previews",
-      "description": "Candidate voices for a new character reading a sample line. Returns voice ids and preview temp keys for create_character.",
+      "description": "Candidate voices for a new character reading a sample line. Costs 6 credits per call. Each preview has voice_id, audio_url (to play to the user) and r2_key: pass the chosen one's voice_id and r2_key (as voice_preview_temp_key) to create_character.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "sample_text": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 200
           },
           "gender_hint": {
             "type": "string",
@@ -1456,13 +1777,13 @@
       },
       "annotations": {
         "readOnlyHint": false,
-        "destructiveHint": false,
+        "destructiveHint": true,
         "title": "Voice previews"
       }
     },
     {
       "name": "create_character",
-      "description": "Save a character from a chosen portrait (r2_key) and voice preview (temp key + voice id).",
+      "description": "Free. Save a character from a chosen portrait and voice preview. portrait_temp_key: the r2_key of a portrait from generate_character_portraits (or an image_key from upload_image_from_url for the user's own photo). voice_preview_temp_key and voice_id: the r2_key and voice_id of a preview from generate_voice_previews. Use the new character_id in the create tools.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1470,19 +1791,37 @@
             "type": "string"
           },
           "style": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "hyper-realistic",
+              "cinematic",
+              "3d-render",
+              "3d-isometric",
+              "anime",
+              "hand-drawn-fantasy",
+              "cartoon",
+              "comic-book",
+              "watercolor",
+              "cyberpunk",
+              "pixel-art",
+              "minimalist-flat"
+            ],
+            "description": "The look: the style you passed to generate_character_portraits."
           },
           "description": {
             "type": "string"
           },
           "portrait_temp_key": {
-            "type": "string"
+            "type": "string",
+            "description": "The chosen portrait's r2_key (generate_character_portraits) or an image_key (upload_image_from_url)."
           },
           "voice_preview_temp_key": {
-            "type": "string"
+            "type": "string",
+            "description": "The chosen voice preview's r2_key (generate_voice_previews)."
           },
           "voice_id": {
-            "type": "string"
+            "type": "string",
+            "description": "The chosen voice preview's voice_id."
           }
         },
         "required": [
@@ -1544,7 +1883,7 @@
     },
     {
       "name": "preview_voice",
-      "description": "Hear a voice say your text (up to 500 characters). Returns a 1-hour audio URL.",
+      "description": "Hear a voice say your text (up to 500 characters). Costs 1 credit per 100 characters (1 to 5). Returns a 1-hour audio URL. list_voices has free sample URLs (preview_url).",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1552,7 +1891,8 @@
             "type": "string"
           },
           "text": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 500
           }
         },
         "required": [
@@ -1562,7 +1902,7 @@
       },
       "annotations": {
         "readOnlyHint": false,
-        "destructiveHint": false,
+        "destructiveHint": true,
         "title": "Preview voice"
       }
     },
@@ -1634,7 +1974,7 @@
     },
     {
       "name": "get_connect_link",
-      "description": "Get a short-lived link that connects one social account. A PERSON must open the link in a browser and approve access; you cannot complete it yourself, so give the link to the user and ask them to open it. Then call list_social_accounts to see the new account. Works for tiktok, instagram (posts as a Reel; uses Instagram login, not Facebook), youtube (9:16 posts as a Short), facebook (Pages only), linkedin, x, threads and pinterest. Bluesky, Telegram and Discord connect with credentials in the web app only (Connections page): tell the user to connect them there. Refused when the plan's account limit is reached.",
+      "description": "Free. Get a short-lived link that connects one social account. A PERSON must open the link in a browser and approve access; you cannot complete it yourself, so give the link to the user and ask them to open it. Then call list_social_accounts to see the new account. Works for tiktok, instagram (posts as a Reel; uses Instagram login, not Facebook), youtube (9:16 posts as a Short), facebook (Pages only), linkedin, x, threads and pinterest. For x the approval page does not send the person back to MakeAIVideo: call list_social_accounts once they say they approved.Bluesky, Telegram and Discord connect with credentials in the web app only (Connections page): tell the user to connect them there. Refused when the plan's account limit is reached.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1646,6 +1986,7 @@
               "youtube",
               "facebook",
               "linkedin",
+              "x",
               "threads",
               "pinterest"
             ],
@@ -1763,6 +2104,898 @@
       "annotations": {
         "readOnlyHint": true,
         "title": "Posts"
+      }
+    },
+    {
+      "name": "upload_image_from_url",
+      "description": "Free. Import one image from a public https URL (JPEG, PNG, WebP, HEIC and other photos, up to 25 MB) into this workspace and get its image_key. Use the key as image_key for image_to_video, in photo_keys for character_swap, or in product_image_keys for create_ugc_video / create_demo_video (real product photos). The user's file must already be online (a link they share); you cannot upload from their computer here. Returns image_key, url (a short-lived preview), width, height.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "image_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Public https URL of the image.",
+            "examples": [
+              "https://example.com/photos/product.jpg"
+            ]
+          }
+        },
+        "required": [
+          "image_url"
+        ]
+      },
+      "annotations": {
+        "title": "Upload image from URL",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "upload_video_from_url",
+      "description": "Free. Import one video from a public https URL (MP4, MOV or WebM, up to 100 MB) into this workspace and get its video_key and duration_seconds. Use the key as avatar_video_key for talking_avatar or source_video_key for character_swap (send duration_seconds with it). Returns video_key, duration_seconds (null if it could not be read), url.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Public https URL of the video.",
+            "examples": [
+              "https://example.com/clips/me-talking.mp4"
+            ]
+          }
+        },
+        "required": [
+          "video_url"
+        ]
+      },
+      "annotations": {
+        "title": "Upload video from URL",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "image_to_video",
+      "description": "Image to video: bring one photo to life as a 5, 10 or 15 second clip. Add narration and a face in the photo speaks it (a talking photo, with voice and lip sync); without a face the line is voiced over the clip. Paid from the credit balance. A silent 5-second Best clip is about 80 credits; with narration (a talking photo) about 100 for a short line. Free quote first: estimate_video_cost with kind \"image-to-video\" (and text = the narration). Needs image_key from upload_image_from_url. Returns video_id with started: true; then call wait_for_video with it until done is true, and give the user download_url. If there is no plan, the price is above max_credits, or the balance does not cover it, nothing is created or charged: the result has started: false and held { reason, credits, balance, options[], next_call }; show the user the options (and start_trial_url or top_up_url when given).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "image_key": {
+            "type": "string",
+            "description": "From upload_image_from_url.",
+            "examples": [
+              "uploads/123/abc.jpg"
+            ]
+          },
+          "duration_seconds": {
+            "type": "number",
+            "enum": [
+              5,
+              10,
+              15
+            ],
+            "description": "Clip length. Default 5."
+          },
+          "animation_prompt": {
+            "type": "string",
+            "description": "Optional: how it should move, e.g. 'slow push in, hair moving in the wind'."
+          },
+          "narration": {
+            "type": "string",
+            "description": "Optional: the line spoken (a talking photo when the photo shows a face)."
+          },
+          "voice_id": {
+            "type": "string",
+            "description": "Optional, with narration: a voice from list_voices. Default: a voice that fits the photo."
+          },
+          "quality": {
+            "type": "string",
+            "enum": [
+              "best",
+              "fast"
+            ],
+            "description": "Optional. \"best\" (default): our sharpest AI video. \"fast\": faster and cheaper, a bit less detail. Only when the user asks for it."
+          },
+          "title": {
+            "type": "string"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of making (and charging for) a second one. Set it when retrying."
+          },
+          "max_credits": {
+            "type": "number",
+            "description": "Optional price confirm: the most credits this call may spend. Above it nothing is created; the result is held with reason price_over_limit and the price."
+          }
+        },
+        "required": [
+          "image_key"
+        ],
+        "examples": [
+          {
+            "image_key": "uploads/123/abc.jpg",
+            "duration_seconds": 5,
+            "animation_prompt": "she smiles and waves",
+            "narration": "Hi! Welcome to our bakery."
+          }
+        ]
+      },
+      "annotations": {
+        "title": "Image to video",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "talking_avatar",
+      "description": "Talking avatar from your own filmed video: the person in the video says a new script (we voice it and lip-sync it onto the clip). Paid from the credit balance. Priced on how long the words take to say: a 6-second line is about 52 credits. Free quote first: estimate_video_cost with kind \"talking-avatar\" and text = the script. Needs avatar_video_key from upload_video_from_url (a clip of one person facing the camera). For an AI presenter instead, use create_spokesperson_video with a character_id; for a photo that talks, use image_to_video with narration. Returns video_id with started: true; then call wait_for_video with it until done is true, and give the user download_url. If there is no plan, the price is above max_credits, or the balance does not cover it, nothing is created or charged: the result has started: false and held { reason, credits, balance, options[], next_call }; show the user the options (and start_trial_url or top_up_url when given).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "avatar_video_key": {
+            "type": "string",
+            "description": "From upload_video_from_url."
+          },
+          "script": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 5000,
+            "description": "The exact words the person says."
+          },
+          "voice_id": {
+            "type": "string",
+            "description": "Optional: a voice from list_voices. Default: our standard voice."
+          },
+          "add_broll": {
+            "type": "boolean",
+            "description": "Optional. true cuts in stock footage over parts of the clip. Default false."
+          },
+          "title": {
+            "type": "string"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of making (and charging for) a second one. Set it when retrying."
+          },
+          "max_credits": {
+            "type": "number",
+            "description": "Optional price confirm: the most credits this call may spend. Above it nothing is created; the result is held with reason price_over_limit and the price."
+          }
+        },
+        "required": [
+          "avatar_video_key",
+          "script"
+        ],
+        "examples": [
+          {
+            "avatar_video_key": "uploads/123/clip.mp4",
+            "script": "Hi, I'm Sam. Here are three quick tips for better sleep tonight."
+          }
+        ]
+      },
+      "annotations": {
+        "title": "Talking avatar",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "character_swap",
+      "description": "Character swap: the person in the user's 3-60 s video becomes a character (character_id from list_characters) or the person in 1-4 photos (photo_keys). Motion, camera, room, lighting and the original audio are kept. Paid from the credit balance: 20 to 32 credits per second of the clip, by the swap engine in use. Free quote first: estimate_video_cost with kind \"character-swap\" and duration_seconds. Needs source_video_key and duration_seconds from upload_video_from_url. rights_confirmed must be true, and only after the USER confirms they own the video (or have permission) and have the right to use the likeness; never set it on your own. Returns video_id with started: true; then call wait_for_video with it until done is true, and give the user download_url. If there is no plan, the price is above max_credits, or the balance does not cover it, nothing is created or charged: the result has started: false and held { reason, credits, balance, options[], next_call }; show the user the options (and start_trial_url or top_up_url when given).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "source_video_key": {
+            "type": "string",
+            "description": "From upload_video_from_url."
+          },
+          "duration_seconds": {
+            "type": "number",
+            "minimum": 3,
+            "maximum": 60,
+            "description": "The clip's length (upload_video_from_url's duration_seconds)."
+          },
+          "character_id": {
+            "type": "number",
+            "description": "A character from list_characters. Send this OR photo_keys."
+          },
+          "photo_keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "maxItems": 4,
+            "description": "1-4 photos of the new person (face-on first), from upload_image_from_url. Send this OR character_id."
+          },
+          "direction": {
+            "type": "string",
+            "description": "Optional: anything to keep or change, e.g. 'keep the red jacket'."
+          },
+          "rights_confirmed": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "description": "Required, true: the user confirmed they own the video (or have permission) and have the right to use the likeness."
+          },
+          "title": {
+            "type": "string"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "Optional. Re-sending the same key returns the SAME video instead of making (and charging for) a second one. Set it when retrying."
+          },
+          "max_credits": {
+            "type": "number",
+            "description": "Optional price confirm: the most credits this call may spend. Above it nothing is created; the result is held with reason price_over_limit and the price."
+          }
+        },
+        "required": [
+          "source_video_key",
+          "duration_seconds",
+          "rights_confirmed"
+        ],
+        "examples": [
+          {
+            "source_video_key": "uploads/123/clip.mp4",
+            "duration_seconds": 12,
+            "character_id": 42,
+            "rights_confirmed": true
+          }
+        ]
+      },
+      "annotations": {
+        "title": "Character swap",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "reschedule_post",
+      "description": "Change when a scheduled post goes out. Works only while the post's status is scheduled and it is more than about 2 minutes from going out; a post already publishing or published cannot be changed. Free. Confirm the new time with the user first. Returns the post (status, scheduled_for, destinations); get_publish_status reads it later.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "post_id": {
+            "type": "string",
+            "description": "Post id (pub_...) from publish_video or list_posts.",
+            "examples": [
+              "pub_abc123"
+            ]
+          },
+          "scheduled_for": {
+            "type": "string",
+            "format": "date-time",
+            "description": "New ISO 8601 time with a timezone offset, at least a few minutes from now.",
+            "examples": [
+              "2026-12-01T15:00:00Z"
+            ]
+          }
+        },
+        "required": [
+          "post_id",
+          "scheduled_for"
+        ]
+      },
+      "annotations": {
+        "title": "Reschedule post",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "cancel_post",
+      "description": "Cancel a scheduled post on every platform it was going to. Works only while the post's status is scheduled and it is more than about 2 minutes from going out. It does not delete a post that is already live: remove that on the platform itself. Free. Confirm with the user first; it cannot be undone (schedule it again with publish_video).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "post_id": {
+            "type": "string",
+            "description": "Post id (pub_...) from publish_video or list_posts.",
+            "examples": [
+              "pub_abc123"
+            ]
+          }
+        },
+        "required": [
+          "post_id"
+        ]
+      },
+      "annotations": {
+        "title": "Cancel post",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "suggest_caption",
+      "description": "Free (no credits). A ready-to-post caption with hashtags, written from the video's own script, as the web Post dialog fills it in, plus per_platform versions where the caption is too long for a platform and a youtube_title. Saved on the video, so a second call returns the same one; refresh: true writes a new one. fallback: true means the writer failed and the caption is the video's title. Show it to the user, then pass it as caption to publish_video.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123."
+          },
+          "refresh": {
+            "type": "boolean",
+            "description": "Optional. true writes a new caption instead of the saved one."
+          }
+        },
+        "required": [
+          "video_id"
+        ]
+      },
+      "annotations": {
+        "title": "Suggest caption",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "update_character",
+      "description": "Free. Rename one of your own characters, change its description, or give it another voice (voice_id from list_voices). Preset characters cannot be edited. The new voice is used by videos made after the change.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "character_id": {
+            "type": "number",
+            "description": "Your own character's id, from list_characters (characters, not presets).",
+            "examples": [
+              1234
+            ]
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "voice_id": {
+            "type": "string",
+            "description": "A voice from list_voices."
+          }
+        },
+        "required": [
+          "character_id"
+        ],
+        "examples": [
+          {
+            "character_id": 1234,
+            "name": "Coach Maya",
+            "voice_id": "21m00Tcm4TlvDq8ikWAM"
+          }
+        ]
+      },
+      "annotations": {
+        "title": "Update character",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true
+      }
+    },
+    {
+      "name": "delete_character",
+      "description": "Delete one of your own characters. Irreversible; videos already made keep it. Presets cannot be deleted. Confirm with the user first.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "character_id": {
+            "type": "number",
+            "description": "Your own character's id, from list_characters (characters, not presets).",
+            "examples": [
+              1234
+            ]
+          }
+        },
+        "required": [
+          "character_id"
+        ]
+      },
+      "annotations": {
+        "title": "Delete character",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": true
+      }
+    },
+    {
+      "name": "get_brand_kit",
+      "description": "Free. The workspace watermark: watermark_url (a short-lived preview of the logo, or null when none is set) and show_watermark (whether new exports carry it). The brand kit is on the Plus and Pro plans.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "title": "Brand kit",
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "set_watermark",
+      "description": "Free. Set the logo watermark for the workspace's new exports: image_url uploads a new logo (a public https PNG, WebP or JPEG, up to 5 MB; a PNG with transparency works best) and shows it unless show_watermark is false; show_watermark turns it on or off; remove_watermark: true deletes it. Videos already exported do not change; export_video makes a new file with it. Needs the Plus or Pro plan (refused otherwise). Returns the brand kit as get_brand_kit does.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "image_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional: a public https link to the logo."
+          },
+          "show_watermark": {
+            "type": "boolean",
+            "description": "Optional: true shows it on new exports, false hides it (the logo is kept)."
+          },
+          "remove_watermark": {
+            "type": "boolean",
+            "description": "Optional: true deletes the logo."
+          }
+        },
+        "examples": [
+          {
+            "image_url": "https://example.com/logo.png"
+          },
+          {
+            "show_watermark": false
+          }
+        ]
+      },
+      "annotations": {
+        "title": "Set watermark",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_workspace",
+      "description": "Free. This workspace: id, name, slug, description and its saved defaults (default_aspect_ratio, default_style, default_character_id), as shown on the web app's Workspace settings page. The create tools do not read these defaults: pass aspect_ratio / character_id on each create.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "title": "Workspace",
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "update_workspace",
+      "description": "Free. Rename the workspace, change its description, or change its saved defaults (default_aspect_ratio, default_style, default_character_id: null clears it). Owners and admins only. These are the settings on the web app's Workspace settings page; the create tools do not read them, so still pass aspect_ratio / character_id on each create.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "default_aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "9:16",
+              "1:1",
+              "16:9"
+            ]
+          },
+          "default_style": {
+            "type": "string",
+            "enum": [
+              "talking-head",
+              "cinematic"
+            ]
+          },
+          "default_character_id": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "A character id from list_characters, or null to clear it."
+          }
+        },
+        "examples": [
+          {
+            "name": "Acme socials",
+            "default_aspect_ratio": "9:16"
+          }
+        ]
+      },
+      "annotations": {
+        "title": "Update workspace",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true
+      }
+    },
+    {
+      "name": "delete_webhook",
+      "description": "Delete a webhook: no more events are sent to its URL. Irreversible (create_webhook makes a new one, with a new secret). Confirm with the user first.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "webhook_id": {
+            "type": "string",
+            "description": "Webhook id from list_webhooks or create_webhook.",
+            "examples": [
+              "wh_abc123"
+            ]
+          }
+        },
+        "required": [
+          "webhook_id"
+        ]
+      },
+      "annotations": {
+        "title": "Delete webhook",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": true
+      }
+    },
+    {
+      "name": "test_webhook",
+      "description": "Free. Send one signed test event (data.test = true) to the webhook's URL now, to check the receiver and its signature check. Returns delivered, status_code, duration_ms and error.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "webhook_id": {
+            "type": "string",
+            "description": "Webhook id from list_webhooks or create_webhook.",
+            "examples": [
+              "wh_abc123"
+            ]
+          }
+        },
+        "required": [
+          "webhook_id"
+        ]
+      },
+      "annotations": {
+        "title": "Test webhook",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_webhook_deliveries",
+      "description": "Free. The webhook's last 50 delivery attempts, newest first: event (one of video.created, video.ready, video.failed, character.created, post.published, post.partially_failed, post.failed, credits.low, credits.refilled), status, attempts, response_status_code, error and next_attempt_at, for debugging a receiver.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "webhook_id": {
+            "type": "string",
+            "description": "Webhook id from list_webhooks or create_webhook.",
+            "examples": [
+              "wh_abc123"
+            ]
+          }
+        },
+        "required": [
+          "webhook_id"
+        ]
+      },
+      "annotations": {
+        "title": "Webhook deliveries",
+        "readOnlyHint": true
+      }
+    },
+    {
+      "name": "get_video",
+      "description": "Free. Everything about one video: status and stage, length, aspect, footage mode and quality, credits used, and (by default) the full script: every scene with scene_number, narration, visual_description, character, duration_seconds, a thumbnail_url and clip_url, and whether our quality check flagged it (flagged, free_remake). Also captions (style, alignment, on), music (track and volume), voice, plan_note / cannot_do and brief_miss (what our review says did not match the brief, with the fix), edit (a change still being made), and links: web_url and editor_url (the user's own pages, sign-in, lasting), thumbnail_url, and once ready download_url (the MP4, 15 minutes). The video stays private: no public link is made unless you call create_share_link. Call it before regenerate_scene, edit_scene_narration or edit_scene_visual to see the scenes, and to show the user what was made.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
+          },
+          "include_scenes": {
+            "type": "boolean",
+            "default": true,
+            "description": "Default true: include the script, scenes, captions, music and voice. false: status and links only."
+          }
+        },
+        "required": [
+          "video_id"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123"
+          }
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Get video"
+      }
+    },
+    {
+      "name": "edit_scene_narration",
+      "description": "Change what one scene says: the new line is re-recorded in the scene's own voice and the picture is kept (cheaper than regenerate_scene). Paid (voice, plus the export with auto_export); the price shows first. Without max_credits this returns the price and charges nothing; call again with max_credits to do it. To change the picture too, use regenerate_scene with narration. A scene whose mouth moves with its line (get_video lip_synced true: a presenter or talking character) cannot keep its picture: the answer is then the price of regenerate_scene with the new line, and its next_call. After it starts, then wait_for_video until done is true.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
+          },
+          "scene_number": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Scene number, from get_video's scenes[].scene_number.",
+            "examples": [
+              2
+            ]
+          },
+          "narration": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "description": "The scene's new spoken line, exactly as it should be said."
+          },
+          "auto_export": {
+            "type": "boolean",
+            "default": true,
+            "description": "Default true: when the change is done, the video file is exported again by itself so the download has it (the export is included in the price). false: change only the project; call export_video later."
+          },
+          "max_credits": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The price the user agreed to. Without it the call only returns the price (nothing is charged); call again with max_credits set to that price (or more) to do it. Above it, nothing is charged.",
+            "examples": [
+              120
+            ]
+          },
+          "idempotency_key": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "Optional. Re-sending the same key returns the first answer instead of doing (and charging for) the change again. Set it when retrying."
+          }
+        },
+        "required": [
+          "video_id",
+          "scene_number",
+          "narration"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123",
+            "scene_number": 3,
+            "narration": "Book today and get your first class free."
+          }
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "title": "Edit scene narration"
+      }
+    },
+    {
+      "name": "edit_scene_visual",
+      "description": "Change what one scene shows: the scene is remade from a new picture description, with its line kept. Paid like regenerate_scene (the clip, plus the export with auto_export); the price shows first. Without max_credits this returns the price and charges nothing; call again with max_credits to do it; then wait_for_video until done is true.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
+          },
+          "scene_number": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Scene number, from get_video's scenes[].scene_number.",
+            "examples": [
+              2
+            ]
+          },
+          "visual_description": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 2000,
+            "description": "What the scene should show: subject, setting, action, camera."
+          },
+          "quality": {
+            "type": "string",
+            "enum": [
+              "best"
+            ],
+            "description": "Optional. \"best\" remakes a scene of a Fast video in Best quality."
+          },
+          "auto_export": {
+            "type": "boolean",
+            "default": true,
+            "description": "Default true: when the change is done, the video file is exported again by itself so the download has it (the export is included in the price). false: change only the project; call export_video later."
+          },
+          "max_credits": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The price the user agreed to. Without it the call only returns the price (nothing is charged); call again with max_credits set to that price (or more) to do it. Above it, nothing is charged.",
+            "examples": [
+              120
+            ]
+          },
+          "idempotency_key": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "Optional. Re-sending the same key returns the first answer instead of doing (and charging for) the change again. Set it when retrying."
+          }
+        },
+        "required": [
+          "video_id",
+          "scene_number",
+          "visual_description"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123",
+            "scene_number": 1,
+            "visual_description": "Wide shot of a busy bakery at sunrise, warm light"
+          }
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "title": "Edit scene visual"
+      }
+    },
+    {
+      "name": "list_music_library",
+      "description": "Free. The background music library the editor offers: track_id, name, description, mood, duration_seconds and a preview_url. Filter by mood. Use a track_id with set_music (a finished video) or as music_id when creating.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mood": {
+            "type": "string",
+            "enum": [
+              "upbeat",
+              "calm",
+              "cinematic",
+              "emotional",
+              "inspirational",
+              "curious",
+              "adventure",
+              "electronic",
+              "tense",
+              "quirky"
+            ],
+            "description": "Optional: only this mood."
+          }
+        },
+        "examples": [
+          {
+            "mood": "upbeat"
+          }
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "title": "Music library"
+      }
+    },
+    {
+      "name": "set_music",
+      "description": "Free. Change or remove a video's background music, or its volume. track_id from list_music_library (or a generated track from list_music), or \"none\" for no music. Saved to the video's project; then call export_video to put it in the file.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
+          },
+          "track_id": {
+            "type": "string",
+            "description": "A library or generated track id, or \"none\".",
+            "examples": [
+              "upbeat-01",
+              "none"
+            ]
+          },
+          "volume": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Music volume 0 to 1 under the voice. Default 0.15, or the current volume."
+          }
+        },
+        "required": [
+          "video_id"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123",
+            "track_id": "upbeat-01",
+            "volume": 0.2
+          },
+          {
+            "video_id": "vid_abc123",
+            "track_id": "none"
+          }
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Set music"
+      }
+    },
+    {
+      "name": "report_video",
+      "description": "Free. Report a bad video to our team for review: wrong, broken, unsafe or off-brand. Say what is wrong in reason (and which scene). It does not change or refund the video; to fix it, use regenerate_scene or edit_scene_*.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video_id": {
+            "type": "string",
+            "description": "Public video id, e.g. vid_abc123 (from list_my_videos or a create result).",
+            "examples": [
+              "vid_abc123"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "description": "What is wrong, in the user's words."
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "nsfw",
+              "violence",
+              "trademark",
+              "harassment",
+              "other"
+            ],
+            "description": "Default other."
+          }
+        },
+        "required": [
+          "video_id",
+          "reason"
+        ],
+        "examples": [
+          {
+            "video_id": "vid_abc123",
+            "reason": "Scene 3 shows a different person than the other scenes.",
+            "category": "other"
+          }
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "title": "Report video"
       }
     }
   ]
