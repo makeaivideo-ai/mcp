@@ -12,7 +12,7 @@ It is the official [Model Context Protocol](https://modelcontextprotocol.io) ser
 | --- | --- |
 | Hosted server | `https://mcp.makeaivideo.ai` (Streamable HTTP, OAuth sign-in, no key to copy) |
 | Local server | `npx -y @makeaivideo/mcp` (stdio, needs `MAKEAIVIDEO_API_KEY`) |
-| Tools | 44: create, plan, edit, deliver and post videos |
+| Tools | 47: create, plan, edit, deliver and post videos |
 | Works with | ChatGPT, Claude, Claude Code, Cursor, VS Code, Codex, Gemini CLI, Windsurf, Grok, Perplexity, Le Chat, Zed, Cline and any MCP client |
 | Output | MP4 in 9:16, 1:1 or 16:9, with captions, in 24 languages |
 | Account | A MakeAIVideo account with credits ([pricing](https://makeaivideo.ai/pricing)) |
@@ -180,12 +180,13 @@ Without a key the local server still starts and lists its tools from the bundled
 | `MAKEAIVIDEO_API_KEY` | (required for tool calls) | Your `mav_` API key |
 | `MAKEAIVIDEO_MCP_URL` | `https://mcp.makeaivideo.ai` | Override the remote endpoint |
 
-## Tools (44)
+## Tools (47)
 
 ### Create videos
 
 | Tool | What it does |
 | --- | --- |
+| `make_video` | The one-call path: give a topic, it prices the video and starts it when the balance covers it |
 | `create_explainer_video` | Explainer video: one idea, explained clearly from question to payoff |
 | `create_listicle_video` | List video: numbered tips or ranked picks, one scene per item |
 | `create_story_video` | Story video for history, mysteries and true events |
@@ -212,6 +213,7 @@ Each create tool takes the length, aspect ratio (9:16, 1:1 or 16:9), and an opti
 
 | Tool | What it does |
 | --- | --- |
+| `wait_for_video` | Waits up to about 50 seconds per call and returns done, progress and the download link |
 | `get_video_status` | Progress of one video, and its download link when ready |
 | `list_my_videos` | Your videos with id, title and status |
 | `get_download_url` | A signed MP4 link for a finished video |
@@ -259,15 +261,16 @@ Each create tool takes the length, aspect ratio (9:16, 1:1 or 16:9), and an opti
 | Tool | What it does |
 | --- | --- |
 | `whoami` | Who is signed in, the plan and the credit balance |
-| `get_credits` | The credit balance in detail |
-| `create_webhook` | Calls your URL when a video is ready, fails, or is posted |
+| `get_credits` | The credit balance in detail, when the plan credits refill, and the add-credits link |
+| `get_top_up_link` | A link you open in a browser to add credits (you pay on Stripe's page; the assistant cannot pay) |
+| `create_webhook` | Calls your URL when a video is ready, fails, or is posted, or when credits run low or refill |
 | `list_webhooks` | Your webhooks and their delivery health |
 
 ## How a video gets made
 
-1. The assistant quotes the cost with `estimate_video_cost` (optional, but good practice).
-2. It calls a `create_*_video` tool with your brief, or `write_script` first so you can edit the script.
-3. It polls `get_video_status` (it respects `poll_after_seconds`) until the video is ready, usually a few minutes.
+1. Quickest: the assistant calls `make_video` with your topic. It prices the video and starts it when your balance covers it. For more control it quotes the cost with `estimate_video_cost`, then calls a `create_*_video` tool with your brief, or `write_script` first so you can edit the script.
+2. If a create result says `started: false`, nothing is rendering or charged: `held` says why, with priced options and the next call to make. Out of credits, it names the shortfall and when the plan refills, and `get_top_up_link` gives you a link to add more.
+3. It calls `wait_for_video` (each call waits up to about 50 seconds) until `done` is true, usually a few minutes.
 4. It returns the MP4 link from `get_download_url`, or posts the video with `publish_video`.
 
 ## Posting to TikTok, Instagram, YouTube and more
@@ -290,7 +293,7 @@ Plans and credit costs: [makeaivideo.ai/pricing](https://makeaivideo.ai/pricing)
 
 ### Is there an MCP server for AI video generation?
 
-Yes. The MakeAIVideo MCP server at `https://mcp.makeaivideo.ai` gives any MCP client 44 tools to write scripts, create finished short-form AI videos with voiceover, scenes, captions and music, and post them to social media. It is listed in the official MCP Registry as `ai.makeaivideo/video-generator`.
+Yes. The MakeAIVideo MCP server at `https://mcp.makeaivideo.ai` gives any MCP client 47 tools to write scripts, create finished short-form AI videos with voiceover, scenes, captions and music, and post them to social media. It is listed in the official MCP Registry as `ai.makeaivideo/video-generator`.
 
 ### How do I make AI videos with ChatGPT?
 
