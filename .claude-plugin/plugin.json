@@ -29,5 +29,6 @@
       "type": "http",
       "url": "https://mcp.makeaivideo.ai"
     }
-  }
+  },
+  "icon": "./.claude-plugin/icon.png"
 }
