@@ -1,0 +1,33 @@
+{
+  "name": "makeaivideo",
+  "displayName": "MakeAIVideo",
+  "version": "1.2.0",
+  "description": "MakeAIVideo AI video generator for Claude Code: the hosted MCP server (70 tools, OAuth sign-in) plus a skill that tells Claude how to make, price, edit and post short-form videos to TikTok, Instagram, YouTube and more.",
+  "author": {
+    "name": "MakeAIVideo",
+    "url": "https://makeaivideo.ai"
+  },
+  "homepage": "https://makeaivideo.ai/mcp",
+  "repository": "https://github.com/makeaivideo-ai/mcp",
+  "license": "MIT",
+  "documentationUrl": "https://makeaivideo.ai/docs/mcp",
+  "supportUrl": "https://makeaivideo.ai/help",
+  "privacyPolicyUrl": "https://makeaivideo.ai/legal/privacy",
+  "termsOfServiceUrl": "https://makeaivideo.ai/legal/terms",
+  "keywords": [
+    "makeaivideo",
+    "ai-video-generator",
+    "video-generation",
+    "mcp",
+    "tiktok",
+    "instagram-reels",
+    "youtube-shorts",
+    "social-media-posting"
+  ],
+  "mcpServers": {
+    "makeaivideo": {
+      "type": "http",
+      "url": "https://mcp.makeaivideo.ai"
+    }
+  }
+}

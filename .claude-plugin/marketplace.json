@@ -1,0 +1,16 @@
+{
+  "name": "makeaivideo",
+  "description": "The MakeAIVideo plugin for Claude Code: AI video generation and posting through the hosted MakeAIVideo MCP server.",
+  "owner": {
+    "name": "MakeAIVideo",
+    "url": "https://makeaivideo.ai"
+  },
+  "plugins": [
+    {
+      "name": "makeaivideo",
+      "source": "./",
+      "description": "Make finished AI videos (script, voiceover, scenes, captions, music) and post them to TikTok, Instagram, YouTube and more. Adds the hosted MakeAIVideo MCP server and the MakeAIVideo skill.",
+      "category": "productivity"
+    }
+  ]
+}
