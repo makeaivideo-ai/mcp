@@ -3,8 +3,8 @@
   "name": "ai.makeaivideo/video-generator",
   "title": "MakeAIVideo",
   "description": "AI video generator: make TikTok, Reels and Shorts videos with voiceover and captions, and post them.",
-  "version": "1.6.0",
-  "websiteUrl": "https://makeaivideo.ai/docs/mcp",
+  "version": "1.7.0",
+  "websiteUrl": "https://makeaivideo.ai/mcp",
   "icons": [
     {
       "src": "https://app.makeaivideo.ai/brand/apple-touch-icon.png",
