@@ -8,6 +8,8 @@
 
 It is the official [Model Context Protocol](https://modelcontextprotocol.io) server for [MakeAIVideo](https://makeaivideo.ai), an AI video generator for short-form video.
 
+Overview: [MakeAIVideo MCP server](https://makeaivideo.ai/mcp) · Setup guide for every app: [makeaivideo.ai/docs/mcp](https://makeaivideo.ai/docs/mcp) · Claude Code: [install the plugin](#claude-code-plugin)
+
 | | |
 | --- | --- |
 | Hosted server | `https://mcp.makeaivideo.ai` (Streamable HTTP, OAuth sign-in, no key to copy) |
@@ -64,7 +66,27 @@ It then works in the Claude phone apps too. On Team and Enterprise plans an Owne
 
 Developer mode needs a Plus, Pro, Business, Enterprise or Education plan.
 
-### Claude Code
+### Claude Code plugin
+
+One install adds both the MakeAIVideo tools (the hosted MCP server) and the MakeAIVideo skill, which tells Claude how to make, price, edit and post videos. In Claude Code, run:
+
+```text
+/plugin marketplace add makeaivideo-ai/mcp
+/plugin install makeaivideo@makeaivideo
+```
+
+Or from your shell:
+
+```bash
+claude plugin marketplace add makeaivideo-ai/mcp
+claude plugin install makeaivideo@makeaivideo
+```
+
+On Claude Code 2.1.275 or later you can do it in one step: `/plugin install makeaivideo --marketplace makeaivideo-ai/mcp`.
+
+Then run `/mcp`, choose the `makeaivideo` server, choose **Authenticate**, and sign in to MakeAIVideo. You do not paste a key. The plugin files are in [`.claude-plugin/`](.claude-plugin) and [`skills/makeaivideo/SKILL.md`](skills/makeaivideo/SKILL.md).
+
+### Claude Code (MCP server only)
 
 ```bash
 claude mcp add --scope user --transport http makeaivideo https://mcp.makeaivideo.ai
@@ -366,6 +388,7 @@ This package, the local stdio bridge, is MIT-licensed. The video generation runs
 ## Links
 
 - MakeAIVideo home: [makeaivideo.ai](https://makeaivideo.ai)
+- MCP server overview: [makeaivideo.ai/mcp](https://makeaivideo.ai/mcp)
 - MCP setup guide: [makeaivideo.ai/docs/mcp](https://makeaivideo.ai/docs/mcp)
 - Connect your AI app (in the app): [app.makeaivideo.ai/ai-assistants](https://app.makeaivideo.ai/ai-assistants)
 - Agent sign-in guide: [makeaivideo.ai/auth.md](https://makeaivideo.ai/auth.md)
