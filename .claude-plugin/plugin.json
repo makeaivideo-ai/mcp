@@ -1,7 +1,7 @@
 {
   "name": "makeaivideo",
   "displayName": "MakeAIVideo",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "MakeAIVideo AI video generator for Claude Code: the hosted MCP server (70 tools, OAuth sign-in) plus a skill that tells Claude how to make, price, edit and post short-form videos to TikTok, Instagram, YouTube and more.",
   "author": {
     "name": "MakeAIVideo",

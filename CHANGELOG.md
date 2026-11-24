@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1 (2026-11-24)
+
+- README and skill: signing up is free with no card, plans from $14, extra credits from $5 on a plan. No code change.
+
 ## 1.2.0 (2026-11-21)
 
 - The bundled `tools.json` snapshot is regenerated from the hosted server: 70 tools (was 47). The snapshot script now lists exactly what the server's tools/list returns, including the tools that fix a finished video.

@@ -1,6 +1,6 @@
 {
   "name": "makeaivideo",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "MakeAIVideo (makeaivideo.ai) AI video generator: create finished short-form videos with AI voiceover, scenes, captions and music, and post them to TikTok, Instagram and YouTube.",
   "mcpServers": {
     "makeaivideo": {
