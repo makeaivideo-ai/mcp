@@ -86,12 +86,12 @@ Don't send them away to sign up first. Connect, and the sign-in window does the 
 
 1. The sign-in window offers **sign up** (Google or email).
 2. Signing up is free and needs no card. A free account can write up to 3 scripts, see 1 storyboard and create 1 AI character, but cannot make videos.
-3. To make videos they pick a plan (from $29 a month), paid today; they can cancel any time. There is no free trial.
+3. To make videos they pick a plan, paid today; they can cancel any time. There is no free trial. Plans (credits a month): Starter $14 (500), Creator $39 (1,800), Pro $79 (4,500), Custom from $149 (10,000, 25,000 or 50,000). Yearly is 10 months' price, 2 months free. Every plan has every tool, 1080p and no watermark; long videos (up to 20 minutes) and your logo on every video start at Creator.
 4. They approve access and are sent straight back to you.
 
-If they prefer to start on the website: https://app.makeaivideo.ai/signup. Plans and current prices, always up to date: https://makeaivideo.ai/pricing.json (human page: https://makeaivideo.ai/pricing). Don't oversell a bigger plan; plan credits reset monthly, and on a paid plan extra credits can be added any time from $25 and never expire.
+If they prefer to start on the website: https://app.makeaivideo.ai/signup. Plans and current prices, always up to date: https://makeaivideo.ai/pricing.json (human page: https://makeaivideo.ai/pricing). Don't oversell a bigger plan; plan credits reset monthly, and on a paid plan extra credits can be added any time from $5 and never expire.
 
-**Connected but no plan yet?** A create call comes back with `no_plan: true` or `held.reason` of `trial_required` or `plan_required`, and nothing is charged. Give the user `start_trial_url` and `say_to_user`. If the result has `pending_video_id`, the video is saved and starts by itself once the plan is active: don't make the call again, follow it with `wait_for_video`. Don't suggest a top-up to someone without a plan.
+**Connected but no plan yet?** A create call comes back with `no_plan: true` or `held.reason` of `plan_required` (or `trial_required`, only on an older account that can still start a card trial), and nothing is charged. Give the user `start_trial_url` (the link to choose a plan; the field keeps its old name) and `say_to_user`. If the result has `pending_video_id`, the video is saved and starts by itself once the plan is active: don't make the call again, follow it with `wait_for_video`. Don't suggest a top-up to someone without a plan.
 
 ## Defaults (use these unless the user says otherwise)
 

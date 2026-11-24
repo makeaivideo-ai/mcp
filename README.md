@@ -329,7 +329,10 @@ A person connects each account once. `get_connect_link` returns a short-lived li
 
 The MCP server has no separate charge. It needs a MakeAIVideo account, and videos are paid from that account's credits, the same balance the web app uses.
 
-- New accounts start with a 7-day trial on a monthly plan. A card is required, and the trial includes trial credits.
+- Signing up is free and needs no card. A free account can write up to 3 scripts, see 1 storyboard and create 1 AI character, but cannot make videos. There is no free trial.
+- Making videos needs a plan, paid today; cancel any time. Plans (credits a month): Starter $14 (500), Creator $39 (1,800), Pro $79 (4,500), Custom from $149 (10,000, 25,000 or 50,000). Yearly is 10 months' price, 2 months free. Every plan has every tool, 1080p and no watermark; long videos (up to 20 minutes) and your logo on every video start at Creator.
+- On a plan you can add extra credits any time, from $5 (30 credits per $1). They never expire. An account with no plan cannot buy credits.
+- With no plan, a create charges nothing and comes back with `no_plan: true` or `held.reason` `plan_required` (`trial_required` only on an older account that can still start a card trial). `start_trial_url` is the link to choose a plan; the field keeps its old name.
 - `estimate_video_cost` quotes the exact cost before anything is spent. Checking status, listing and quoting use no credits.
 - An agent cannot create an account for you. Sign up at [app.makeaivideo.ai/signup](https://app.makeaivideo.ai/signup), then connect.
 
@@ -375,7 +378,7 @@ Not for the hosted server: most apps sign you in with OAuth. You need a `mav_` A
 
 ### How much does it cost?
 
-MakeAIVideo is a paid product. New accounts start with a 7-day trial (card required), and videos use credits from your plan. The MCP server itself has no extra charge. `estimate_video_cost` quotes each video first. See [pricing](https://makeaivideo.ai/pricing).
+MakeAIVideo is a paid product. Signing up is free with no card, and making videos needs a plan, from $14 a month; videos use credits from your plan. The MCP server itself has no extra charge. `estimate_video_cost` quotes each video first. See [pricing](https://makeaivideo.ai/pricing).
 
 ### How long does a video take, and what formats do I get?
 
